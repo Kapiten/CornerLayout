@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CornerLayout</string>
+
+    <string-array name="type_of_things">
+        <item>Thing_1</item>
+        <item>Thing_2</item>
+        <item>Thing_3</item>
+        <item>Thing_4</item>
+        <item>Thing_5</item>
+    </string-array>
+</resources>
