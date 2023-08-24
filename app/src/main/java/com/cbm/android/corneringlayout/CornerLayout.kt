@@ -9,9 +9,11 @@ import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.core.view.ViewCompat
@@ -56,53 +58,17 @@ import com.google.android.material.shape.ShapeAppearanceModel
     private var colorStates: Array<IntArray>? = null
     private var colorColors: IntArray? = null
 
-    constructor(context: Context?) : super(context)
-    {initView();}
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    {initView();setCustoms(attrs)}
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ){initView();setCustoms(attrs)}
+    constructor(context: Context?) : super(context) {initView();}
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {initView();setCustoms(attrs)}
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr){initView();setCustoms(attrs)}
 
-    fun initView() {
-        View.inflate(context, R.layout.layout_corner, this)
-        orientation=VERTICAL
-    }
+    fun initView() { View.inflate(context, R.layout.layout_corner, this);orientation=VERTICAL }
 
     fun setCustoms(attrs: AttributeSet?) {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.CornerLayout)
         val ctype = ta!!.getInt(R.styleable.CornerLayout_contentType, 0)
         if(ta.getInt(R.styleable.CornerLayout_contentType, 0)>0) {
-            val ll = View.inflate(context, R.layout.layout_content_typed, this)
-
-            ivLeft = ll.findViewById(R.id.llcIVLeft)
-            ivRight = ll.findViewById(R.id.llcIVRight)
-            llcContainer = ll.findViewById(R.id.llcHolder)
-
-            when(ctype) {
-                1-> {
-                    content = TextInput(context, llcContainer!!)
-                        //.setLeftImage(ivLeft!!)
-                        //.setRightImage(ivRight!!)
-                        .create(attrs)
-//                    (content as TextInput).passwordToggle = ta.getBoolean(R.styleable.CornerLayout_passwordToggleEnabled, false)
-
-                    llcContainer!!.addView(
-                        if((content as TextInput).getViewBinding()!=null)
-                        {(content as TextInput).getViewBinding()!!.root}
-                        else{((content as TextInput).getView())},
-                        LayoutParams(
-                            LayoutParams.MATCH_PARENT,
-                            LayoutParams.WRAP_CONTENT
-                        )
-                    )
-
-//                    content.et!!.isEnabled =
-                }
-                2->{}
-            }
+            createContentType(if (ctype<=0){null}else {if(ctype==1){ContentText.Simple}else{ContentText.Advanced}}, attrs)
         }
         if(content is TextInput) {
             (content as TextInput).et!!.gravity = gravity
@@ -130,14 +96,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
             setBottomRightRadius(ta.getDimension(R.styleable.CornerLayout_bottomRightRadius, -1f))
         }
 
-        popupWindow = LayoutInflater.from(context).inflate(R.layout.popup_window, this, false)
-        popup = PopupWindow(
-            popupWindow,
-            android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            false
-        )
-        if(popupWindow!=null){popupWindow!!.setOnClickListener { if(popup!=null&&popup!!.isShowing)popup!!.dismiss() }}
+        createPopupWindow()
 
         if(leftDrawable!=null&&ivLeft!=null) {
             ivLeft!!.visibility = View.VISIBLE
@@ -156,13 +115,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
 //            }
 //            setPadding(0)
 //        }
-        if(conditional>0) {
-            when(conditional) {
-                1->{conditionView=ivLeft}
-                2->{conditionView=ivRight}
-            }
-            conditionView!!.visibility=View.GONE
-        }
+        setTextConditional(conditional)
 
         cornerType = ta.getInt(R.styleable.CornerLayout_cornerType, 1)
         if(radius>0) {
@@ -266,6 +219,88 @@ import com.google.android.material.shape.ShapeAppearanceModel
         bgShape()
     }
 
+    fun isTextConditional(): Boolean {return conditionView!=null}
+
+    fun setTextFocusable(set:Boolean) {
+        if(content!=null&&content is TextInput) {(content as TextInput).et!!.isFocusable = set}
+    }
+
+    fun isTextFocusable(): Boolean {if(content!=null&&content is TextInput) {return (content as TextInput).et!!.isFocusable}else{return false}}
+
+    private fun setTextConditional(conditional: Int) {
+        if (conditional > 0) {
+            when (conditional) {
+                1 -> {
+                    conditionView = ivLeft
+                }
+
+                2 -> {
+                    conditionView = ivRight
+                }
+            }
+            conditionView!!.visibility = GONE
+        }
+    }
+
+    private fun createPopupWindow() {
+        popupWindow = LayoutInflater.from(context).inflate(R.layout.popup_window, this, false)
+        popup = PopupWindow(
+            popupWindow,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            false
+        )
+        if (popupWindow != null) {
+            popupWindow!!.setOnClickListener { if (popup != null && popup!!.isShowing) popup!!.dismiss() }
+        }
+    }
+
+    private fun createContentType(ctype: ContentText?, attrs: AttributeSet?) {
+        val ll = inflate(context, R.layout.layout_content_typed, this)
+
+        ivLeft = ll.findViewById(R.id.llcIVLeft)
+        ivRight = ll.findViewById(R.id.llcIVRight)
+        llcContainer = ll.findViewById(R.id.llcHolder)
+
+        var type = if(ctype!=null){1}else{2}
+        when (type) {
+            1 -> {
+                content = if (attrs!=null){TextInput(context, llcContainer!!)
+                    //.setLeftImage(ivLeft!!)
+                    //.setRightImage(ivRight!!)
+                    .create(attrs)}else{TextInput(context, llcContainer!!).createDefault()}
+    //                    (content as TextInput).passwordToggle = ta.getBoolean(R.styleable.CornerLayout_passwordToggleEnabled, false)
+
+                llcContainer!!.addView(
+                    if ((content as TextInput).getViewBinding() != null) {
+                        (content as TextInput).getViewBinding()!!.root
+                    } else {
+                        ((content as TextInput).getView())
+                    },
+                    LayoutParams(
+                        LayoutParams.MATCH_PARENT,
+                        LayoutParams.WRAP_CONTENT
+                    )
+                )
+
+    //                    content.et!!.isEnabled =
+            }
+
+            2 -> {}
+        }
+    }
+
+    fun createDefault(): CornerLayout {
+        return LayoutInflater.from(context).inflate(R.layout.the_text_view, this) as CornerLayout
+    }
+
+    fun createTextDefault(text:String, hint:String): CornerLayout {
+        LayoutInflater.from(context).inflate(R.layout.the_text_view, this) as CornerLayout
+//        cl.getContentText()!!.text=text
+//        cl.getContentText()!!.hint=hint
+        return this
+    }
+
     override fun draw(canvas: Canvas?) {
         super.draw(canvas)
 
@@ -285,9 +320,64 @@ import com.google.android.material.shape.ShapeAppearanceModel
         return content
     }
 
+    fun setContent(type:Int, context:Context, vg:ViewGroup) {
+        if(type==1) {
+            content = TextInput(context, vg)
+
+            vg.addView(
+                if((content as TextInput).getViewBinding()!=null)
+                {(content as TextInput).getViewBinding()!!.root}
+                else{((content as TextInput).getView())},
+                LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+                )
+            )
+        }
+    }
+
+    fun setContent(type:Int) {
+        if(type==1) {
+            content = TextInput(context, llcContainer!!)
+                .create(null)
+
+            llcContainer!!.addView(
+                if((content as TextInput).getViewBinding()!=null)
+                {(content as TextInput).getViewBinding()!!.root}
+                else{((content as TextInput).getView())},
+                LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+                )
+            )
+        }
+    }
+
+    fun setTextType(type:ContentText) {
+        (content as TextInput).setContentText(type)
+    }
+
     fun getContentText(): TextInput? {
         return (content as TextInput)
     }
+    fun setText(text:String) {
+        if(content!=null&&content is TextInput){(content as TextInput).et!!.text.clear();(content as TextInput).et!!.text.append(text)}
+    }
+
+    fun getText(): String {
+        return if(content!=null&&content is TextInput){(content as TextInput).et!!.text.toString()}else{""}
+    }
+
+    fun setLayoutEnabled(value:Boolean) {
+        isEnabled = value
+        if(!isEnabled) {
+            shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFB0B0B0"))
+        } else {
+            shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFFFFFFF"))
+        }
+    }
+
+    fun isLayoutEnabled():Boolean {return isEnabled}
 
     fun setRadius(value: Float) {
         radius = value
@@ -344,6 +434,34 @@ import com.google.android.material.shape.ShapeAppearanceModel
     fun getRightImage(): ImageView? {
         return this.ivRight
     }
+
+    fun setStrokeColoring(color: Int) {
+        strokeColor = color
+        getShapeDrawable()!!.strokeColor = makeCurrentStateColor(strokeColor)
+        bgShape()
+    }
+
+    fun setStrokeColoring(color: ColorStateList) {
+        strokeColors = color
+        getShapeDrawable()!!.strokeColor = strokeColors
+        bgShape()
+    }
+
+    fun setFilling(color: Int) {
+        fillColor = color
+        getShapeDrawable()!!.fillColor = makeCurrentStateColor(strokeColor)
+        bgShape()
+    }
+
+    fun setFilling(color: ColorStateList) {
+        fillColors = color
+        getShapeDrawable()!!.fillColor = fillColors
+        bgShape()
+    }
+
+    fun setStrokeWidth(width:Float) {strokeWidth=width}
+
+    fun getStrokeWidth(): Float{return strokeWidth}
 
     fun getShapeDrawable(): MaterialShapeDrawable? {
         return shapeDrawable

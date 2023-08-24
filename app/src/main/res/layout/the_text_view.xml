@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.cbm.android.corneringlayout.CornerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/s4dp"
+    app:contentType="text"
+    app:contentText="simple"
+    app:strokeColor="@color/black"
+    app:strokingWidth="@dimen/s2dp"
+    app:radius="@dimen/s4dp"
+    app:text="Sample"
+    app:hint="Hint Sample"
+    app:textSize="20sp"
+
+    />

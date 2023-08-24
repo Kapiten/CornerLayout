@@ -20,4 +20,14 @@
         android:src="@drawable/ic_visibility_24"
         android:visibility="gone"
         />
+    <TextView
+        android:id="@+id/lstopt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:text="@string/symbol_x"
+        android:textColor="#F888"
+        android:visibility="gone"
+        />
 </LinearLayout>

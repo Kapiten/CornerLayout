@@ -33,6 +33,8 @@
         </attr>
         <attr name="enabled" format="boolean" />
         <attr name="noText" format="boolean" />
+        <attr name="showOption" format="boolean" />
+        <attr name="tintOption" format="reference|color" />
         <attr name="hint" format="string" />
         <attr name="text" format="string" />
         <attr name="textColor" format="reference|color" />
@@ -89,6 +91,7 @@
         <attr name="strokeColor" format="reference|color"/>
         <attr name="strokingWidth" format="dimension"/>
         <attr name="backgroundDrawable" format="reference|color" />
+        <attr name="optionsDrawable" format="reference" />
 
     </declare-styleable>
 </resources>

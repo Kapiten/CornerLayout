@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
@@ -16,6 +17,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.viewbinding.ViewBinding
 import com.cbm.android.corneringlayout.databinding.LayoutAdvancedTextBinding
 import com.cbm.android.corneringlayout.databinding.LayoutSimpleTextBinding
@@ -32,15 +34,14 @@ import com.google.android.material.textfield.TextInputLayout
     private var viewGroup: ViewGroup? = null
     private var typedArray: TypedArray? = null
     var et: EditText? = null
+    var btn: TextView? = null
     private var isKeyboardShowing = false
-    var ctext: Int = 0
-    var text = ""
-    var hint = ""
-    var hintColor = Color.BLACK
-    var hintColors: ColorStateList? = null
-    var textColor = Color.BLACK
-    var textColors: ColorStateList? = null
-    var textSize = -1f
+    var ctext: Int = 0; var passwordToggle = false; var showOption = false
+    var text = ""; var textSize = -1f
+    var hint = "" ; var hintColor = Color.BLACK; var hintColors: ColorStateList? = null
+    var textColor = Color.BLACK; var textColors: ColorStateList? = null
+    var tintOption = Color.parseColor("#FF808080"); var tintOptions: ColorStateList? = null
+    var optionsDrawable: Drawable? = null
 //    var passwordToggle: Boolean = false
 
     constructor(context: Context?, viewGroup: ViewGroup?) : super(context) {
@@ -63,139 +64,223 @@ import com.google.android.material.textfield.TextInputLayout
         this.viewGroup = viewGroup
     }
 
-    fun create(): TextInput {
-        return this
-    }
+    private fun create(): TextInput {
+        when (ctext) {
+            1 -> {
+                contentText = CornerLayout.ContentText.Simple
+            }
+            2 -> {
+                contentText =
+                    CornerLayout.ContentText.Advanced
+            }
+        }
+        if(text==null){text=""}
+        if (contentText != null) {
+            if (contentText!!.equals(CornerLayout.ContentText.Simple)) {
+                setViewBinding(LayoutSimpleTextBinding.inflate(
+                    LayoutInflater.from(context)))
 
-    fun create(attrs: AttributeSet?): TextInput {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CornerLayout)
-        if (typedArray != null) {
-            val ctext = typedArray!!.getInt(R.styleable.CornerLayout_contentText, 0)
-            val text = typedArray!!.getString(R.styleable.CornerLayout_text)
-            val hint = typedArray!!.getString(R.styleable.CornerLayout_hint)
-            val hintColor = typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)
-            val hintColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_hintColor)
-            val textColor = typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
-            val textColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_textColor)
-            val textSize = typedArray!!.getDimension(R.styleable.CornerLayout_textSize, -1f)
-            val passwordToggle = typedArray!!.getBoolean(R.styleable.CornerLayout_passwordToggleEnabled, false)
-
-            when (ctext) {
-                1 -> {
-                    contentText = CornerLayout.ContentText.Simple
-                }
-                2 -> {
-                    contentText =
-                        CornerLayout.ContentText.Advanced
+            } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
+                try {
+                    if (this.viewGroup != null) {
+                        setViewBinding(LayoutAdvancedTextBinding.inflate(
+                            LayoutInflater.from(context)))
+                    }
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
                 }
             }
-            if (contentText != null) {
+
+            val content = getViewBinding()?:getView()
+            if (content != null) {
                 if (contentText!!.equals(CornerLayout.ContentText.Simple)) {
-                    setViewBinding(LayoutSimpleTextBinding.inflate(
-                        LayoutInflater.from(context)))
+                    (content as LayoutSimpleTextBinding)
+                    et = content.lstet
+                    if(passwordToggle){
+                        content.lstiv.visibility=View.VISIBLE
+                        et!!.setSingleLine(true)
+                        et!!.transformationMethod=
+                            PasswordTransformationMethod.getInstance()
+                        et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
 
-                } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
-                    try {
-                        if (this.viewGroup != null) {
-                            setViewBinding(LayoutAdvancedTextBinding.inflate(
-                                LayoutInflater.from(context)))
+                        content.lstiv.setOnClickListener {
+                            if(content.lstet.transformationMethod==null) {
+                                content.lstiv.setImageResource(R.drawable.ic_visibility_24)
+                                content.lstet.transformationMethod=
+                                    PasswordTransformationMethod.getInstance()
+                                et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                            } else {
+                                content.lstiv.setImageResource(R.drawable.ic_visibility_off_24)
+                                content.lstet.transformationMethod=null
+                                et!!.inputType=InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_CLASS_TEXT
+                            }
                         }
-                    } catch (ex: Exception) {
-                        ex.printStackTrace()
+                    } else {
+                        et!!.transformationMethod=null
                     }
-                }
 
-                val content = getViewBinding()?:getView()
-                if (content != null) {
-                    if (contentText!!.equals(CornerLayout.ContentText.Simple)) {
-                        (content as LayoutSimpleTextBinding)
-                        et = content.lstet
-                        if(passwordToggle){
-                            content.lstiv.visibility=View.VISIBLE
-                            et!!.setSingleLine(true)
-                            et!!.transformationMethod=
-                                PasswordTransformationMethod.getInstance()
-                            et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
-
-                            content.lstiv.setOnClickListener {
-                                if(content.lstet.transformationMethod==null) {
-                                    content.lstiv.setImageResource(R.drawable.ic_visibility_24)
-                                    content.lstet.transformationMethod=
-                                        PasswordTransformationMethod.getInstance()
-                                    et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                                } else {
-                                    content.lstiv.setImageResource(R.drawable.ic_visibility_off_24)
-                                    content.lstet.transformationMethod=null
-                                    et!!.inputType=InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_CLASS_TEXT
-                                }
+                    if(showOption) {
+                        content.lstopt.visibility = VISIBLE
+                        btn = content.lstopt
+                        if(optionsDrawable!=null) {
+                            content.lstopt.setText("")
+                            content.lstopt.background = optionsDrawable
+                            if (tintOptions != null) {
+                                content.lstopt.backgroundTintList=(tintOptions)
+                            } else {
+                                content.lstopt.backgroundTintList=(
+                                        getCornerLayout().makeCurrentStateColor(
+                                            tintOption
+                                        ))
                             }
                         } else {
-                            et!!.transformationMethod=null
+                            if (tintOptions != null) {
+                                content.lstopt.setTextColor(tintOptions)
+                            } else {
+                                content.lstopt.setTextColor(
+                                    getCornerLayout().makeCurrentStateColor(
+                                        tintOption
+                                    )
+                                )
+                            }
+                            content.lstopt.setTextSize(
+                                TypedValue.COMPLEX_UNIT_PX,
+                                et!!.textSize*1f
+                            )
                         }
+                        content.lstopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
+                    } else {content.lstopt.visibility = GONE; content.lstopt.setOnClickListener(null); btn=null}
 
-                        if (text != null && !text.isEmpty()) {
-                            content.lstet.text.clear()
-                            content.lstet.text.append(text)
+                    if(content.lstet!=null) {
+                        if (text != null) {
+                            content.lstet.text.clear();content.lstet.text.append(text)
                         } else {
-                            content.lstet.text.append("text")
+                            content.lstet.text.clear()
                         }
-                        content.lstet.hint = hint
-                        if (hintColors != null) {
-                            content.lstet.setHintTextColor(hintColors)
-                        } else if (hintColor < 0) {
-                            content.lstet.setHintTextColor(hintColor)
-                        }
-                        if (textColors != null) {
-                            content.lstet.setTextColor(textColors)
-                        } else if (textColor < 0) {
-                            content.lstet.setTextColor(textColor)
-                        }
-                        if (textSize >= 0) {
-                            content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
-                        }
+                    }
+                    if(hint!=null)content.lstet.hint = hint
+                    if (hintColors != null) {
+                        content.lstet.setHintTextColor(hintColors)
+                    } else if (hintColor < 0) {
+                        content.lstet.setHintTextColor(hintColor)
+                    }
+                    if (textColors != null) {
+                        content.lstet.setTextColor(textColors)
+                    } else if (textColor < 0) {
+                        content.lstet.setTextColor(textColor)
+                    }
+                    if (textSize >= 0) {
+                        content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+                    }
 
-                        content.lstet.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
-                            textHasFocus(hasFocus)
-                        }
-                    } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
-                        (content as LayoutAdvancedTextBinding)
-                        et = content.lit.editText
-                        if(passwordToggle) {
-                            content.lit.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
-                            et!!.setSingleLine(true)
-                            et!!.transformationMethod=
-                                PasswordTransformationMethod.getInstance()
-                            et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                    content.lstet.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
+                        textHasFocus(hasFocus)
+                    }
+                } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
+                    (content as LayoutAdvancedTextBinding)
+                    et = content.lit.editText
+                    if(passwordToggle) {
+                        content.lit.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+                        et!!.setSingleLine(true)
+                        et!!.transformationMethod=
+                            PasswordTransformationMethod.getInstance()
+                        et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
 //                            et!!.setImportantForAutofill(IMPORTANT_FOR_AUTOFILL_NO)
-                        }
-                        if (text != null && !text.isEmpty()) {
-                            content.lit.editText!!.text.clear()
-                            content.lit.editText!!.text.append(text)
-                        }
-                        content.lit.hint = hint
-                        if (hintColors != null) {
-                            content.lit.setHintTextColor(hintColors)
-                        }
-                        if (textColors != null) {
-                            content.lit.editText!!.setTextColor(textColors)
-                        } else if (textColor >= 0) {
-                            content.lit.editText!!.setTextColor(textColor)
-                        }
-                        if (textSize >= 0) {
-                            content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+                    }
+
+                    if(showOption) {
+                        content.litopt.visibility = VISIBLE
+                        btn=content.litopt
+                        if(optionsDrawable!=null) {
+                            content.litopt.setText("")
+                            content.litopt.background = optionsDrawable
+                            content.litopt.layoutParams = LinearLayoutCompat.LayoutParams(Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, resources.displayMetrics)),
+                                Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,24f, resources.displayMetrics)))
+                            if (tintOptions != null) {
+                                content.litopt.backgroundTintList=(tintOptions)
+                            } else {
+                                content.litopt.backgroundTintList=(
+                                        getCornerLayout().makeCurrentStateColor(
+                                            tintOption
+                                        )
+                                        )
+                            }
+                        } else {
+                            if(tintOptions!=null) {content.litopt.setTextColor(tintOptions)}
+                            else {content.litopt.setTextColor(getCornerLayout().makeCurrentStateColor(tintOption))}
+                            content.litopt.setTextSize(TypedValue.COMPLEX_UNIT_PX, et!!.textSize*1.5f)
                         }
 
-                        content.lit.editText!!.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
-                            textHasFocus(hasFocus)
-                        }
+                        content.litopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
+                    } else {content.litopt.visibility = GONE; content.litopt.setOnClickListener(null); btn=null}
+
+                    if (content.lit.editText!=null){
+                        if(text != null) {
+                        content.lit.editText!!.text.clear()
+                        content.lit.editText!!.text.append(text)
+                    } else {content.lit.editText!!.text.clear()}}
+                    if(hint!=null)content.lit.hint = hint
+                    if (hintColors != null) {
+                        content.lit.setHintTextColor(hintColors)
+                    }
+                    if (textColors != null) {
+                        content.lit.editText!!.setTextColor(textColors)
+                    } else if (textColor >= 0) {
+                        content.lit.editText!!.setTextColor(textColor)
+                    }
+                    if (textSize >= 0) {
+                        content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+                    }
+
+                    content.lit.editText!!.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
+                        textHasFocus(hasFocus)
                     }
                 }
             }
         }
-
-        typedArray.recycle()
-
         return this
+    }
+
+    fun createDefault(): TextInput {
+        ctext = CornerLayout.ContentText.Simple.ordinal+1
+        hint = "Sample"
+        textSize = resources.getDimension(R.dimen.s4dp)
+
+        return create()
+    }
+
+    fun create(attrs: AttributeSet?): TextInput {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CornerLayout)
+        if(typedArray!=null) {
+            try {
+                    ctext = typedArray!!.getInt(R.styleable.CornerLayout_contentText, 0)
+                    try{text = typedArray!!.getString(R.styleable.CornerLayout_text)!!}catch (ex:Exception){ex.printStackTrace();text=""}
+                    try{hint = typedArray!!.getString(R.styleable.CornerLayout_hint)!!} catch(ex:Exception) {ex.printStackTrace();hint=""}
+                    hintColor =
+                        typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)
+                    hintColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_hintColor)
+                    textColor =
+                        typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
+                    textColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_textColor)
+                    textSize = typedArray!!.getDimension(R.styleable.CornerLayout_textSize, -1f)
+                    passwordToggle =
+                        typedArray!!.getBoolean(
+                            R.styleable.CornerLayout_passwordToggleEnabled,
+                            false
+                        )
+                    optionsDrawable =
+                        typedArray!!.getDrawable(R.styleable.CornerLayout_optionsDrawable)
+                    showOption = typedArray!!.getBoolean(R.styleable.CornerLayout_showOption, false)
+                    tintOption = typedArray!!.getColor(
+                        R.styleable.CornerLayout_tintOption,
+                        Color.parseColor("#FF808080")
+                    )
+                    tintOptions =
+                        typedArray!!.getColorStateList(R.styleable.CornerLayout_tintOption)
+                return create()
+            } catch (ex: Exception) { ex.printStackTrace(); return createDefault()
+            } /*finally { typedArray.recycle() }*/
+        } else {return createDefault()}
     }
 
     private fun textHasFocus(hasFocus: Boolean) {
@@ -255,6 +340,10 @@ import com.google.android.material.textfield.TextInputLayout
 
     private fun getCornerLayout() = (viewGroup!!.parent.parent as CornerLayout)
 
+    fun setTextType(type:CornerLayout.ContentText) { ctext = if(type.equals(CornerLayout.ContentText.Simple)){1}else{2} }
+
+    fun getTextType(): CornerLayout.ContentText {return if(ctext==1){CornerLayout.ContentText.Simple}else{CornerLayout.ContentText.Advanced}}
+
     fun setContentText(contentText: CornerLayout.ContentText): TextInput {
         this.contentText = contentText
         return this
@@ -296,6 +385,10 @@ import com.google.android.material.textfield.TextInputLayout
 
     fun getViewBinding(): ViewBinding? {
         return this.viewBinding
+    }
+
+    fun setOnOptionsClick(listener: OnClickListener) {
+        if(btn!=null)btn!!.setOnClickListener(listener)
     }
 
     companion object {

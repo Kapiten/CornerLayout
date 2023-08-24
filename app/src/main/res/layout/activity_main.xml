@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -86,7 +87,7 @@
             app:textColor="@color/white"
             app:text="Hello, CornerLayout World."
             app:hint="Sample Hint"
-            app:hintColor="#FFFF8000"
+            app:hintColor="#FF808080"
             />
         <com.cbm.android.corneringlayout.CornerLayout
             android:id="@+id/clBGAdvancesText"
@@ -97,10 +98,12 @@
             app:contentText="advanced"
             app:backgroundDrawable="@drawable/bgr8_black"
             app:textColor="@color/white"
-            app:text="Hello, CornerLayout World."
             app:hint="Sample Hint"
             app:hintColor="#FFFF8000"
             app:inputType="textEmailAddress"
+            app:showOption="true"
+            app:tintOption="@color/white"
+            app:optionsDrawable="@drawable/baseline_person_outline_24"
             />
         <com.cbm.android.corneringlayout.CornerLayout
             android:id="@+id/clBGCSimpleText"
@@ -110,7 +113,8 @@
             android:padding="@dimen/s8dp"
             app:contentType="text"
             app:contentText="simple"
-
+            app:showOption="true"
+            app:tintOption="@color/white"
             app:radius="@dimen/s8dp"
             app:fillColor="@color/black"
             app:textColor="@color/white"
@@ -154,7 +158,7 @@
             app:contentText="simple"
             app:radius="@dimen/s8dp"
             app:fillColor="@drawable/colors_accent"
-            app:strokeColor="@drawable/colors_bubblegum"
+            app:strokeColor="@color/black"
             app:strokingWidth="@dimen/s4dp"
             app:leftDrawable="@drawable/baseline_warning_24"
             app:rightDrawable="@drawable/baseline_person_outline_24"
@@ -163,6 +167,9 @@
             app:hintColor="@color/black"
             app:text="Sample Text."
             app:textSize="20sp"
+            app:showOption="true"
+            app:tintOption="@color/white"
+            app:optionsDrawable="@drawable/ic_clear_24"
             />
 
         <com.cbm.android.corneringlayout.CornerLayout
@@ -186,6 +193,8 @@
             app:hintColor="@color/black"
             app:text="Sample Text."
             app:textSize="20sp"
+            app:showOption="true"
+            app:tintOption="@color/white"
             />
 
         <com.cbm.android.corneringlayout.CornerLayout
