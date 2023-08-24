@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/s8dp"
     >
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lit"
@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@null"
+        android:paddingTop="@dimen/s8dp"
         android:textColorHint="#FF808080"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
@@ -24,20 +25,13 @@
             android:id="@+id/litET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:padding="-10dp"
             android:background="@android:color/transparent"
+            android:gravity="center_vertical"
             tools:text="Sample text"
             />
-
     </com.google.android.material.textfield.TextInputLayout>
-    <!--<ImageButton
-        android:id="@+id/litIB"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_clear_24"
-        app:tint="#888"
-        android:visibility="gone"
-        />-->
     <TextView
         android:id="@+id/litopt"
         android:layout_width="wrap_content"

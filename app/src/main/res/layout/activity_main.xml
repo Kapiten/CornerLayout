@@ -99,6 +99,7 @@
             app:backgroundDrawable="@drawable/bgr8_black"
             app:textColor="@color/white"
             app:text="Hello, CornerLayout World."
+            app:textPaddingTop="@dimen/s16dp"
             app:hint="Sample Hint"
             app:hintColor="#FFFF8000"
             app:inputType="textEmailAddress"

@@ -500,12 +500,9 @@ import com.google.android.material.shape.ShapeAppearanceModel
                         +"\nconditionView!!.y="+conditionView!!.y
                         +"\n(this.y+conditionView!!.y)="+(this.y+conditionView!!.y))
             }
-
         } else {
             conditionView!!.visibility = View.GONE
-            if (popup!!.isShowing) {
-                popup!!.dismiss()
-            }
+            if (popup!!.isShowing) { popup!!.dismiss() }
         }
     }
 
