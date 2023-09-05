@@ -98,6 +98,7 @@
             app:contentText="advanced"
             app:backgroundDrawable="@drawable/bgr8_black"
             app:textColor="@color/white"
+            app:text="Hello, CornerLayout World."
             app:hint="Sample Hint"
             app:hintColor="#FFFF8000"
             app:inputType="textEmailAddress"
@@ -164,9 +165,10 @@
             app:rightDrawable="@drawable/baseline_person_outline_24"
             app:conditionView="left"
             app:hint="Sample Hint"
-            app:hintColor="@color/black"
+            app:hintColor="@color/white"
             app:text="Sample Text."
             app:textSize="20sp"
+            app:textColor="@color/white"
             app:showOption="true"
             app:tintOption="@color/white"
             app:optionsDrawable="@drawable/ic_clear_24"
@@ -286,6 +288,48 @@
             app:hintColor="@drawable/colors_accent"
             app:text="Sample Text."
             app:textSize="20sp"
+            />
+        <com.cbm.android.corneringlayout.CornerMButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="btnSample"
+            app:cbCornerType="round"
+            app:cbRadius="@dimen/s8dp"
+            app:cbStrokeColor="@color/black"
+            app:cbStrokingWidth="@dimen/s4dp"
+            />
+
+        <com.cbm.android.corneringlayout.CornerButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/s8dp"
+            app:cbText="SampleA"
+            app:cbCornerType="cut"
+            app:cbRadius="@dimen/s8dp"
+            app:cbStrokeColor="@color/black"
+            app:cbStrokingWidth="@dimen/s4dp"
+            />
+
+        <com.cbm.android.corneringlayout.CornerButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/s8dp"
+            app:cbText="SampleB"
+            app:cbCornerType="round"
+            app:cbRadius="@dimen/s8dp"
+            app:cbStrokeColor="@color/black"
+            app:cbStrokingWidth="@dimen/s4dp"
+            />
+
+        <com.cbm.android.corneringlayout.CornerButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/s8dp"
+            app:cbText="SampleC"
+            app:cbCornerType="cut"
+            app:cbRadius="@dimen/s8dp"
+            app:cbStrokeColor="@drawable/colors_accent"
+            app:cbStrokingWidth="@dimen/s4dp"
             />
     </LinearLayout>
 </ScrollView>

@@ -24,11 +24,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.ll.addView(EditText(this), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
 
-        val cl = CornerLayout(this);
-        cl.setPadding(8)
-        cl.createTextDefault("Sample", "Hint Sample")
-
-        binding.ll.addView(cl, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+//        val cl = CornerLayout(this);
+//        cl.setPadding(8)
+//        cl.createTextDefault("Sample", "Hint Sample")
+//
+//        binding.ll.addView(cl, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+//        binding.ll.addView(CornerButton(this))
 
         binding.clConditionalSimpleText.getContentText()!!.et!!.addTextChangedListener {
             binding.clConditionalSimpleText
