@@ -219,6 +219,14 @@ import com.google.android.material.shape.ShapeAppearanceModel
         bgShape()
     }
 
+    fun isTextEnabled(): Boolean { return if(content is TextInput){(content as TextInput).et!!.isEnabled} else {false} }
+
+    fun setTextEnabled(enabled:Boolean){
+        if(!enabled) { if(fillColors==null) { shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFB0B0B0")) }
+        } else{ if(fillColor<1){shapeDrawable!!.fillColor=makeCurrentStateColor(fillColor)} else {shapeDrawable!!.fillColor=makeCurrentStateColor(Color.WHITE)} }
+        if(content is TextInput)(content as TextInput).et!!.isEnabled=enabled
+    }
+
     fun isTextConditional(): Boolean {return conditionView!=null}
 
     fun setTextFocusable(set:Boolean) {

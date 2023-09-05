@@ -256,8 +256,7 @@ import com.google.android.material.textfield.TextInputLayout
                     ctext = typedArray!!.getInt(R.styleable.CornerLayout_contentText, 0)
                     try{text = typedArray!!.getString(R.styleable.CornerLayout_text)!!}catch (ex:Exception){ex.printStackTrace();text=""}
                     try{hint = typedArray!!.getString(R.styleable.CornerLayout_hint)!!} catch(ex:Exception) {ex.printStackTrace();hint=""}
-                    hintColor =
-                        typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)
+                    hintColor = typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)
                     hintColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_hintColor)
                     textColor =
                         typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
