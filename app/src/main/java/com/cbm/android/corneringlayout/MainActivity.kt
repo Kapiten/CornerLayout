@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.ll.addView(EditText(this), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
 
+        binding.btnSampleA.setOnClickListener { Toast.makeText(this, "SampleA", Toast.LENGTH_SHORT).show() }
+        binding.btnSampleB.setOnClickListener { Toast.makeText(this, "SampleB", Toast.LENGTH_SHORT).show() }
+        binding.btnSampleC.setOnClickListener { Toast.makeText(this, "SampleC", Toast.LENGTH_SHORT).show() }
 //        val cl = CornerLayout(this);
 //        cl.setPadding(8)
 //        cl.createTextDefault("Sample", "Hint Sample")

@@ -238,13 +238,8 @@ import com.google.android.material.shape.ShapeAppearanceModel
     private fun setTextConditional(conditional: Int) {
         if (conditional > 0) {
             when (conditional) {
-                1 -> {
-                    conditionView = ivLeft
-                }
-
-                2 -> {
-                    conditionView = ivRight
-                }
+                1 -> { conditionView = ivLeft }
+                2 -> { conditionView = ivRight }
             }
             conditionView!!.visibility = GONE
         }
@@ -290,10 +285,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
                         LayoutParams.WRAP_CONTENT
                     )
                 )
-
-    //                    content.et!!.isEnabled =
             }
-
             2 -> {}
         }
     }
