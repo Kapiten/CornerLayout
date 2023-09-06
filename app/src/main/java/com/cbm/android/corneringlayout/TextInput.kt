@@ -374,8 +374,8 @@ import com.google.android.material.textfield.TextInputLayout
         this.view = view
     }
 
-    fun getView(): View? {
-        return this.view
+    fun getView(): View {
+        return if(view==null) this else view!!
     }
 
     fun setViewBinding(viewBinding: ViewBinding?) {

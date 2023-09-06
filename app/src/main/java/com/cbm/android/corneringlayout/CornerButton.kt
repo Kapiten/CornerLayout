@@ -7,11 +7,13 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewTreeObserver
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.view.ViewCompat
-import com.cbm.android.corneringlayout.databinding.LayoutCornerButtonBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -23,7 +25,6 @@ import java.math.BigDecimal
 /*
 * Created by tebogo.sibiya on 30/08/2023.
 */class CornerButton: LinearLayout {
-
     private var isKeyboardShowing = false
 
     //corners
@@ -43,28 +44,35 @@ import java.math.BigDecimal
     private var strokeWidth: Float = -1f
     private var colorStates: Array<IntArray>? = null
     private var colorColors: IntArray? = null
+
+    private lateinit var tv: TextView;
+
     constructor(context: Context) : super(context){initView()}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs){initView();setCustoms(attrs)}
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {initView(); setCustoms(attrs)}
+        context, attrs, defStyleAttr) {initView(); setCustoms(attrs)}
 
-    fun initView() { View.inflate(context, R.layout.layout_corner_button, this)/*MaterialButton(context)*/ }
+    fun initView() { View.inflate(context, R.layout.layout_corner_button, this); tv=findViewById(R.id.tvBtn); }
 
     fun setCustoms(attrs: AttributeSet?) {
-        val binding: LayoutCornerButtonBinding=LayoutCornerButtonBinding.inflate(LayoutInflater.from(context))
         val ta = context.obtainStyledAttributes(attrs, R.styleable.CornerButton)
 //        val conditional = ta!!.getInt(R.styleable.CornerButton_cbConditionView, 0)
-        binding.tvBtn.setText(ta.getString(R.styleable.CornerButton_cbText))
-        binding.tvBtn.setTextColor(ta.getColor(R.styleable.CornerLayout_textColor, Color.BLACK))
-//        binding.tvBtn.setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
-        binding.tvBtn.textSize=ta.getDimension(R.styleable.CornerLayout_textSize, -1f)
+        tv.setText(ta.getString(R.styleable.CornerButton_cbText))
+        Log.d(TAG, "CornerButton_cbText: " + ta.getString(R.styleable.CornerButton_cbText)+"\ntvBtn.getText="+tv.text)
+        tv.setTextColor(ta.getColor(R.styleable.CornerButton_cbTextColor, Color.BLACK))
+
+        tv.setOnClickListener { v->callOnClick(); }
+        tv.setOnTouchListener { v, event ->
+            if(event.actionMasked==MotionEvent.ACTION_DOWN) {isPressed=true;v.performClick();true}
+            else{isPressed=false;true}
+
+            false }
+//        tv.setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
+        tv.textSize=ta.getDimension(R.styleable.CornerButton_cbTextSize, -1f)
         setRadius(ta.getDimension(R.styleable.CornerButton_cbRadius, -1f))
         if(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f)>0) {
-            setTopLeftRadius(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f))
-        }
+            setTopLeftRadius(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f)) }
+
         if(ta.getDimension(R.styleable.CornerButton_cbTopRightRadius, -1f)>0) {
             setTopRightRadius(ta.getDimension(R.styleable.CornerButton_cbTopRightRadius, -1f))
         }

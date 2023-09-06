@@ -289,47 +289,88 @@
             app:text="Sample Text."
             app:textSize="20sp"
             />
-        <com.cbm.android.corneringlayout.CornerMButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="btnSample"
-            app:cbCornerType="round"
-            app:cbRadius="@dimen/s8dp"
-            app:cbStrokeColor="@color/black"
-            app:cbStrokingWidth="@dimen/s4dp"
-            />
 
         <com.cbm.android.corneringlayout.CornerButton
+            android:id="@+id/btnSampleA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/s8dp"
             app:cbText="SampleA"
             app:cbCornerType="cut"
             app:cbRadius="@dimen/s8dp"
-            app:cbStrokeColor="@color/black"
+            app:cbStrokeColor="@drawable/colors_black_gray"
             app:cbStrokingWidth="@dimen/s4dp"
             />
 
         <com.cbm.android.corneringlayout.CornerButton
+            android:id="@+id/btnSampleB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/s8dp"
             app:cbText="SampleB"
+            app:cbTextSize="20sp"
+            app:cbTextColor="@color/black"
             app:cbCornerType="round"
             app:cbRadius="@dimen/s8dp"
-            app:cbStrokeColor="@color/black"
+            app:cbStrokeColor="@drawable/colors_bubblegum"
             app:cbStrokingWidth="@dimen/s4dp"
             />
 
         <com.cbm.android.corneringlayout.CornerButton
+            android:id="@+id/btnSampleC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/s8dp"
             app:cbText="SampleC"
+            app:cbTextSize="20sp"
+            app:cbTextColor="@color/black"
             app:cbCornerType="cut"
             app:cbRadius="@dimen/s8dp"
             app:cbStrokeColor="@drawable/colors_accent"
             app:cbStrokingWidth="@dimen/s4dp"
+            />
+
+        <com.cbm.android.corneringlayout.CornerButton
+            android:id="@+id/btnSampleAA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/s8dp"
+            app:cbText="SampleAA"
+            app:cbCornerType="cut"
+            app:cbRadius="@dimen/s8dp"
+            app:cbStrokeColor="@color/black"
+            app:cbStrokingWidth="@dimen/s4dp"
+            app:cbFillColor="@drawable/colors_black_gray"
+            app:cbTextColor="@color/white"
+            />
+
+        <com.cbm.android.corneringlayout.CornerButton
+            android:id="@+id/btnSampleBB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/s8dp"
+            app:cbText="SampleBB"
+            app:cbTextSize="20sp"
+            app:cbTextColor="@color/white"
+            app:cbCornerType="round"
+            app:cbRadius="@dimen/s8dp"
+            app:cbStrokeColor="@color/black"
+            app:cbFillColor="@drawable/colors_accent"
+            />
+
+        <com.cbm.android.corneringlayout.CornerButton
+            android:id="@+id/btnSampleCC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/s8dp"
+            app:cbText="SampleCC"
+            app:cbTextSize="20sp"
+            app:cbTextColor="@color/black"
+            app:cbCornerType="cut"
+            app:cbRadius="@dimen/s8dp"
+            app:cbStrokeColor="@color/black"
+            app:cbStrokingWidth="1dp"
+            app:cbFillColor="@drawable/colors_white_gray"
             />
     </LinearLayout>
 </ScrollView>
