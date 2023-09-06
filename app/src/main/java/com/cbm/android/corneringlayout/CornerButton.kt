@@ -67,9 +67,11 @@ import java.math.BigDecimal
 
         tv.setOnClickListener { v->callOnClick(); }
         tv.setOnTouchListener { v, event ->
-            if(event.actionMasked==MotionEvent.ACTION_DOWN) {isPressed=true;true}
-            else if(event.actionMasked==MotionEvent.ACTION_MOVE&&event.actionMasked==MotionEvent.ACTION_OUTSIDE) {isPressed=false;true}
-            else if(event.actionMasked==MotionEvent.ACTION_UP) {isPressed=false;v.performClick();true}
+            Log.d(TAG, "event.actionMasked="+event.actionMasked)
+
+            if(event.actionMasked==MotionEvent.ACTION_BUTTON_PRESS||event.actionMasked==MotionEvent.ACTION_DOWN) {isPressed=true;true}
+            else if((event.actionMasked==MotionEvent.ACTION_MOVE&&event.actionMasked==MotionEvent.ACTION_OUTSIDE)||event.actionMasked==MotionEvent.ACTION_MOVE) {isPressed=false;true}
+            else if(event.actionMasked==MotionEvent.ACTION_HOVER_ENTER&&event.actionMasked==MotionEvent.ACTION_BUTTON_RELEASE) {isPressed=false;v.performClick();true}
             false }
 //        tv.setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, ta.getInteger(R.styleable.CornerButton_cbTextSize, -1).toFloat())
