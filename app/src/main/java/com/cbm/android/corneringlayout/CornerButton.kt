@@ -68,6 +68,7 @@ import java.math.BigDecimal
         tv.setOnClickListener { v->callOnClick(); }
         tv.setOnTouchListener { v, event ->
             if(event.actionMasked==MotionEvent.ACTION_DOWN) {isPressed=true;true}
+            else if(event.actionMasked==MotionEvent.ACTION_MOVE&&event.actionMasked==MotionEvent.ACTION_OUTSIDE) {isPressed=false;true}
             else if(event.actionMasked==MotionEvent.ACTION_UP) {isPressed=false;v.performClick();true}
             false }
 //        tv.setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
