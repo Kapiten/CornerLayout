@@ -8,7 +8,7 @@
 
         <attr name="cbText" format="string" />
         <attr name="cbTextColor" format="reference|color" />
-        <attr name="cbTextSize" format="dimension" />
+        <attr name="cbTextSize" format="integer" />
         <attr name="cbRadius" format="dimension" />
         <attr name="cbTopLeftRadius" format="dimension" />
         <attr name="cbTopRightRadius" format="dimension" />

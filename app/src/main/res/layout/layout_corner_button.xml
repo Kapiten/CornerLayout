@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/black"
-        tools:text="Sample1"
+        android:textSize="16sp"
+        tools:text="Sampling1"
         />
     <View
         android:layout_width="1dp"

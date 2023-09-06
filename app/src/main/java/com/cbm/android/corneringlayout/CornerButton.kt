@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -14,6 +15,7 @@ import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.core.view.setPadding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -57,18 +59,19 @@ import java.math.BigDecimal
     fun setCustoms(attrs: AttributeSet?) {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.CornerButton)
 //        val conditional = ta!!.getInt(R.styleable.CornerButton_cbConditionView, 0)
+        tv.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+        setPadding(0)
         tv.setText(ta.getString(R.styleable.CornerButton_cbText))
         Log.d(TAG, "CornerButton_cbText: " + ta.getString(R.styleable.CornerButton_cbText)+"\ntvBtn.getText="+tv.text)
         tv.setTextColor(ta.getColor(R.styleable.CornerButton_cbTextColor, Color.BLACK))
 
         tv.setOnClickListener { v->callOnClick(); }
         tv.setOnTouchListener { v, event ->
-            if(event.actionMasked==MotionEvent.ACTION_DOWN) {isPressed=true;v.performClick();true}
-            else{isPressed=false;true}
-
+            if(event.actionMasked==MotionEvent.ACTION_DOWN) {isPressed=true;true}
+            else if(event.actionMasked==MotionEvent.ACTION_UP) {isPressed=false;v.performClick();true}
             false }
 //        tv.setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
-        tv.textSize=ta.getDimension(R.styleable.CornerButton_cbTextSize, -1f)
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, ta.getInteger(R.styleable.CornerButton_cbTextSize, -1).toFloat())
         setRadius(ta.getDimension(R.styleable.CornerButton_cbRadius, -1f))
         if(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f)>0) {
             setTopLeftRadius(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f)) }
