@@ -157,6 +157,7 @@
             android:padding="@dimen/s8dp"
             app:contentType="text"
             app:contentText="simple"
+            app:textPaddingTop="@dimen/s8dp"
             app:radius="@dimen/s8dp"
             app:fillColor="@drawable/colors_accent"
             app:strokeColor="@color/black"
