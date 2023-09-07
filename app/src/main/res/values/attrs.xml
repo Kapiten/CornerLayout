@@ -46,6 +46,7 @@
         <attr name="text" format="string" />
         <attr name="textColor" format="reference|color" />
         <attr name="textSize" format="dimension" />
+        <attr name="spTextSize" format="integer" />
         <attr name="inputType">
             <flag name="none" value="0x00000000" />
             <flag name="text" value="0x00000001" />

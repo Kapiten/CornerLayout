@@ -38,7 +38,7 @@ import com.google.android.material.textfield.TextInputLayout
     var btn: TextView? = null
     private var isKeyboardShowing = false
     var ctext: Int = 0; var passwordToggle = false; var showOption = false
-    var text = ""; var textSize = -1f
+    var text = ""; var textSize = -1f; var spTextSize=-1
     var hint = "" ; var hintColor = Color.BLACK; var hintColors: ColorStateList? = null
     var textColor = Color.BLACK; var textColors: ColorStateList? = null
     var tintOption = Color.parseColor("#FF808080"); var tintOptions: ColorStateList? = null
@@ -171,8 +171,9 @@ import com.google.android.material.textfield.TextInputLayout
                     } else if (textColor < 0) {
                         content.lstet.setTextColor(textColor)
                     }
-                    if (textSize >= 0) {
-                        content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+                    if(spTextSize>=0) {content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
+                    else if (textSize >= 0) {
+                        content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
                     }
                     
                     if(textPadding>0) { content.lstet.setPadding(textPadding) }
@@ -234,8 +235,9 @@ import com.google.android.material.textfield.TextInputLayout
                     } else if (textColor >= 0) {
                         content.lit.editText!!.setTextColor(textColor)
                     }
-                    if (textSize >= 0) {
-                        content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+                    if(spTextSize>=0) {content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
+                    else if (textSize >= 0) {
+                        content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
                     }
 
                     content.lit.editText!!.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
@@ -264,9 +266,9 @@ import com.google.android.material.textfield.TextInputLayout
                     try{hint = typedArray!!.getString(R.styleable.CornerLayout_hint)!!} catch(ex:Exception) {ex.printStackTrace();hint=""}
                     hintColor = typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)
                     hintColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_hintColor)
-                    textColor =
-                        typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
+                    textColor = typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
                     textColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_textColor)
+                    spTextSize = typedArray!!.getInteger(R.styleable.CornerLayout_spTextSize, -1)
                     textSize = typedArray!!.getDimension(R.styleable.CornerLayout_textSize, -1f)
                     passwordToggle =
                         typedArray!!.getBoolean(
@@ -282,6 +284,7 @@ import com.google.android.material.textfield.TextInputLayout
                     )
                     tintOptions =
                         typedArray!!.getColorStateList(R.styleable.CornerLayout_tintOption)
+                textPadding=typedArray!!.getDimension(R.styleable.CornerLayout_textPadding, 0f).toInt()
                 textPaddingTop=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingTop, 0f).toInt()
                 textPaddingLeft=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingLeft, 0f).toInt()
                 textPaddingRight=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingRight, 0f).toInt()
