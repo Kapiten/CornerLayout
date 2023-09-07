@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:focusable="true"
-    android:clickable="true"
-    >
-    <TextView
+<androidx.appcompat.widget.AppCompatTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/tvBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,20 +10,3 @@
         android:textSize="16sp"
         tools:text="Sampling1"
         />
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#80000000"
-        android:visibility="gone"
-        />
-    <TextView
-        android:id="@+id/tvOpt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:background="@drawable/ic_clear_24"
-        android:visibility="gone"
-        />
-
-</LinearLayout>

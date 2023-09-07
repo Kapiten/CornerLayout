@@ -304,7 +304,7 @@
 
         <com.cbm.android.corneringlayout.CornerButton
             android:id="@+id/btnSampleB"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/s8dp"
             app:cbText="SampleB"
@@ -318,7 +318,7 @@
 
         <com.cbm.android.corneringlayout.CornerButton
             android:id="@+id/btnSampleC"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/s8dp"
             app:cbText="SampleC"

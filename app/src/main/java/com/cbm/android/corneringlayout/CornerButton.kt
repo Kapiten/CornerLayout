@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -26,7 +27,7 @@ import java.math.BigDecimal
 
 /*
 * Created by tebogo.sibiya on 30/08/2023.
-*/class CornerButton: LinearLayout {
+*/class CornerButton: androidx.appcompat.widget.AppCompatTextView {
     private var isKeyboardShowing = false
 
     //corners
@@ -54,27 +55,17 @@ import java.math.BigDecimal
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context, attrs, defStyleAttr) {initView(); setCustoms(attrs)}
 
-    fun initView() { View.inflate(context, R.layout.layout_corner_button, this); tv=findViewById(R.id.tvBtn); }
+    fun initView() { /*View.inflate(context, R.layout.layout_corner_button, null);*/ }
 
     fun setCustoms(attrs: AttributeSet?) {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.CornerButton)
 //        val conditional = ta!!.getInt(R.styleable.CornerButton_cbConditionView, 0)
-        tv.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
-        setPadding(0)
-        tv.setText(ta.getString(R.styleable.CornerButton_cbText))
-        Log.d(TAG, "CornerButton_cbText: " + ta.getString(R.styleable.CornerButton_cbText)+"\ntvBtn.getText="+tv.text)
-        tv.setTextColor(ta.getColor(R.styleable.CornerButton_cbTextColor, Color.BLACK))
-
-        tv.setOnClickListener { v->callOnClick(); }
-        tv.setOnTouchListener { v, event ->
-            Log.d(TAG, "event.actionMasked="+event.actionMasked)
-
-            if(event.actionMasked==MotionEvent.ACTION_BUTTON_PRESS||event.actionMasked==MotionEvent.ACTION_DOWN) {isPressed=true;true}
-            else if((event.actionMasked==MotionEvent.ACTION_MOVE&&event.actionMasked==MotionEvent.ACTION_OUTSIDE)||event.actionMasked==MotionEvent.ACTION_MOVE) {isPressed=false;true}
-            else if(event.actionMasked==MotionEvent.ACTION_HOVER_ENTER&&event.actionMasked==MotionEvent.ACTION_BUTTON_RELEASE) {isPressed=false;v.performClick();true}
-            false }
-//        tv.setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, ta.getInteger(R.styleable.CornerButton_cbTextSize, -1).toFloat())
+        gravity=Gravity.CENTER
+        setText(ta.getString(R.styleable.CornerButton_cbText))
+        Log.d(TAG, "CornerButton_cbText: " + ta.getString(R.styleable.CornerButton_cbText)+"\ntvBtn.getText="+text)
+        setTextColor(ta.getColor(R.styleable.CornerButton_cbTextColor, Color.BLACK))
+//        setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, ta.getInteger(R.styleable.CornerButton_cbTextSize, -1).toFloat())
         setRadius(ta.getDimension(R.styleable.CornerButton_cbRadius, -1f))
         if(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f)>0) {
             setTopLeftRadius(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f)) }
@@ -86,8 +77,7 @@ import java.math.BigDecimal
             setBottomLeftRadius(ta.getDimension(R.styleable.CornerButton_cbBottomLeftRadius, -1f))
         }
         if(ta.getDimension(R.styleable.CornerButton_cbBottomRightRadius, -1f)>0) {
-            setBottomRightRadius(ta.getDimension(R.styleable.CornerButton_cbBottomRightRadius, -1f))
-        }
+            setBottomRightRadius(ta.getDimension(R.styleable.CornerButton_cbBottomRightRadius, -1f)) }
 
         cornerType = ta.getInt(R.styleable.CornerButton_cbCornerType, 1)
 //        if(cornerRadius>0){radius = cornerRadius.toFloat()}
@@ -105,6 +95,7 @@ import java.math.BigDecimal
         }
 
         shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel!!)
+
         if(ta.getDrawable(R.styleable.CornerButton_cbBackgroundDrawable)!=null) {
             this.background = ta.getDrawable(R.styleable.CornerButton_cbBackgroundDrawable)
         } else {
@@ -161,28 +152,13 @@ import java.math.BigDecimal
                 if (isKeyboardShowing) { isKeyboardShowing = false }
             }
 
-//            try {
-//                if(popup!=null&&popup!!.isShowing) {
-//                    var yoff = 0
-//                    if ((this.y + conditionView!!.y) > resources.displayMetrics.heightPixels - 400 || isKeyboardShowing) {
-//                        popup!!.contentView.measure(
-//                            View.MeasureSpec.UNSPECIFIED,
-//                            View.MeasureSpec.UNSPECIFIED
-//                        )
-//                        yoff = -1 * ((popup!!.contentView.measuredHeight/2) + this.height)
-//                    }
-//                    popup!!.update(conditionView!!, 0, yoff, popup!!.width, popup!!.height)
-//                }
-//            } catch(ex:java.lang.Exception) {}
         })
 
         bgShape()
     }
 
     private fun bgShape() {
-        if(radius>0||(topLeftRadius>0||topRightRadius>0||bottomLeftRadius>0||bottomRightRadius>0)) {
-            ViewCompat.setBackground(this, shapeDrawable!!)
-        }
+        if(radius>-1||(topLeftRadius>-1||topRightRadius>-1||bottomLeftRadius>-1||bottomRightRadius>-1)) { ViewCompat.setBackground(this, shapeDrawable!!) }
     }
 
     fun setRadius(value: Float) {

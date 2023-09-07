@@ -18,6 +18,7 @@ import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.view.setPadding
 import androidx.viewbinding.ViewBinding
 import com.cbm.android.corneringlayout.databinding.LayoutAdvancedTextBinding
 import com.cbm.android.corneringlayout.databinding.LayoutSimpleTextBinding
@@ -43,6 +44,7 @@ import com.google.android.material.textfield.TextInputLayout
     var tintOption = Color.parseColor("#FF808080"); var tintOptions: ColorStateList? = null
     var optionsDrawable: Drawable? = null
 //    var passwordToggle: Boolean = false
+    var textPadding:Int=0; var textPaddingTop:Int=0; var textPaddingBottom:Int=0; var textPaddingLeft:Int=0; var textPaddingStart:Int=0; var textPaddingRight:Int=0; var textPaddingEnd:Int=0;
 
     constructor(context: Context?, viewGroup: ViewGroup?) : super(context) {
         this.viewGroup = viewGroup
@@ -172,10 +174,11 @@ import com.google.android.material.textfield.TextInputLayout
                     if (textSize >= 0) {
                         content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
                     }
+                    
+                    if(textPadding>0) { content.lstet.setPadding(textPadding) }
+                    else { content.lstet.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
-                    content.lstet.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
-                        textHasFocus(hasFocus)
-                    }
+                    content.lstet.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> textHasFocus(hasFocus) }
                 } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
                     (content as LayoutAdvancedTextBinding)
                     et = content.lit.editText
@@ -213,6 +216,9 @@ import com.google.android.material.textfield.TextInputLayout
 
                         content.litopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
                     } else {content.litopt.visibility = GONE; content.litopt.setOnClickListener(null); btn=null}
+
+                    if(textPadding>0) { content.lit.editText!!.setPadding(textPadding) }
+                    else { content.lit.editText!!.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
                     if (content.lit.editText!=null){
                         if(text != null) {

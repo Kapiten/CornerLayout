@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CornerButton">
-        <attr name="cbCornerType">
-            <enum name="cut" value="1" />
-            <enum name="round" value="0" />
-        </attr>
-
-        <attr name="cbText" format="string" />
-        <attr name="cbTextColor" format="reference|color" />
-        <attr name="cbTextSize" format="integer" />
-        <attr name="cbRadius" format="dimension" />
-        <attr name="cbTopLeftRadius" format="dimension" />
-        <attr name="cbTopRightRadius" format="dimension" />
-        <attr name="cbBottomLeftRadius" format="dimension" />
-        <attr name="cbBottomRightRadius" format="dimension" />
-        <attr name="cbFillColor" format="reference|color"/>
-        <attr name="cbStrokeColor" format="reference|color"/>
-        <attr name="cbStrokingWidth" format="dimension"/>
-        <attr name="cbBackgroundDrawable" format="reference|color" />
-        <attr name="cbOptionsDrawable" format="reference" />
-        <attr name="cbEnabled" format="boolean" />
-    </declare-styleable>
-
     <declare-styleable name="CornerLayout">
         <attr name="leftDrawable" format="reference" />
         <attr name="rightDrawable" format="reference" />
@@ -53,6 +31,13 @@
             <flag name="start" value="0x00800003" />
             <flag name="end" value="0x00800005" />
         </attr>
+        <attr name="textPadding" format="dimension" />
+        <attr name="textPaddingTop" format="dimension" />
+        <attr name="textPaddingRight" format="dimension" />
+        <attr name="textPaddingBottom" format="dimension" />
+        <attr name="textPaddingLeft" format="dimension" />
+        <attr name="textPaddingEnd" format="dimension" />
+        <attr name="textPaddingStart" format="dimension" />
         <attr name="enabled" format="boolean" />
         <attr name="noText" format="boolean" />
         <attr name="showOption" format="boolean" />

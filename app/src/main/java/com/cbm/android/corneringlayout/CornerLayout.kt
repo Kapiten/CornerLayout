@@ -310,10 +310,9 @@ import com.google.android.material.shape.ShapeAppearanceModel
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         return !isEnabled
     }
+
     private fun bgShape() {
-        if(radius>0||(topLeftRadius>0||topRightRadius>0||bottomLeftRadius>0||bottomRightRadius>0)) {
-            ViewCompat.setBackground(this, shapeDrawable!!)
-        }
+        if(radius>-1||(topLeftRadius>-1||topRightRadius>-1||bottomLeftRadius>-1||bottomRightRadius>-1)) { ViewCompat.setBackground(this, shapeDrawable!!) }
     }
 
     fun getContent(): Any? {
