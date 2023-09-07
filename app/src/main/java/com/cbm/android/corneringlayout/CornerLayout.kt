@@ -44,11 +44,11 @@ import com.google.android.material.shape.ShapeAppearanceModel
     private var shapeAppearanceModel: ShapeAppearanceModel? = null
     private var shapeDrawable: MaterialShapeDrawable? = null
     private var cornerType: Int = 1
-    private var radius = -1f
-    private var topLeftRadius = -1f
-    private var topRightRadius = -1f
-    private var bottomLeftRadius = -1f
-    private var bottomRightRadius = -1f
+    private var radius = 0f
+    private var topLeftRadius = 0f
+    private var topRightRadius = 0f
+    private var bottomLeftRadius = 0f
+    private var bottomRightRadius = 0f
 
     var fillColor: Int = Color.TRANSPARENT
     var fillColors: ColorStateList? = null

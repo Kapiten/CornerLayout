@@ -48,6 +48,5 @@
         android:background="@android:color/transparent"
         android:text="@string/symbol_x"
         android:textColor="#F888"
-        android:visibility="gone"
         />
 </androidx.appcompat.widget.LinearLayoutCompat>

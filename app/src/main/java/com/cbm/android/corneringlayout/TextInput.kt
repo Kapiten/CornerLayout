@@ -217,8 +217,8 @@ import com.google.android.material.textfield.TextInputLayout
                         content.litopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
                     } else {content.litopt.visibility = GONE; content.litopt.setOnClickListener(null); btn=null}
 
-                    if(textPadding>0) { content.lit.editText!!.setPadding(textPadding) }
-                    else { content.lit.editText!!.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
+                    if(textPadding>0) { content.litET.setPadding(textPadding) }
+                    else { content.litET.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
                     if (content.lit.editText!=null){
                         if(text != null) {
@@ -282,6 +282,12 @@ import com.google.android.material.textfield.TextInputLayout
                     )
                     tintOptions =
                         typedArray!!.getColorStateList(R.styleable.CornerLayout_tintOption)
+                textPaddingTop=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingTop, 0f).toInt()
+                textPaddingLeft=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingLeft, 0f).toInt()
+                textPaddingRight=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingRight, 0f).toInt()
+                textPaddingStart=typedArray!!.getDimensionPixelSize(R.styleable.CornerLayout_textPaddingStart, 0).toInt()
+                textPaddingEnd=typedArray!!.getDimensionPixelOffset(R.styleable.CornerLayout_textPaddingEnd, 0).toInt()
+                textPaddingBottom=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingBottom, 0f).toInt()
                 return create()
             } catch (ex: Exception) { ex.printStackTrace(); return createDefault()
             } /*finally { typedArray.recycle() }*/
