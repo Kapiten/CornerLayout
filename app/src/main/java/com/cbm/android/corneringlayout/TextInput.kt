@@ -38,7 +38,7 @@ import com.google.android.material.textfield.TextInputLayout
     var btn: TextView? = null
     private var isKeyboardShowing = false
     var ctext: Int = 0; var passwordToggle = false; var showOption = false
-    var text = ""; var textSize = -1f
+    var text = ""; var textSize = -1f; var spTextSize=-1
     var hint = "" ; var hintColor = Color.BLACK; var hintColors: ColorStateList? = null
     var textColor = Color.BLACK; var textColors: ColorStateList? = null
     var tintOption = Color.parseColor("#FF808080"); var tintOptions: ColorStateList? = null
@@ -171,8 +171,9 @@ import com.google.android.material.textfield.TextInputLayout
                     } else if (textColor < 0) {
                         content.lstet.setTextColor(textColor)
                     }
-                    if (textSize >= 0) {
-                        content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+                    if(spTextSize>=0) {content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
+                    else if (textSize >= 0) {
+                        content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
                     }
                     
                     if(textPadding>0) { content.lstet.setPadding(textPadding) }
@@ -202,23 +203,19 @@ import com.google.android.material.textfield.TextInputLayout
                             if (tintOptions != null) {
                                 content.litopt.backgroundTintList=(tintOptions)
                             } else {
-                                content.litopt.backgroundTintList=(
-                                        getCornerLayout().makeCurrentStateColor(
-                                            tintOption
-                                        )
-                                        )
+                                content.litopt.backgroundTintList=(getCornerLayout().makeCurrentStateColor(tintOption))
                             }
                         } else {
                             if(tintOptions!=null) {content.litopt.setTextColor(tintOptions)}
                             else {content.litopt.setTextColor(getCornerLayout().makeCurrentStateColor(tintOption))}
-                            content.litopt.setTextSize(TypedValue.COMPLEX_UNIT_PX, et!!.textSize*1.5f)
+                            content.litopt.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())
                         }
 
                         content.litopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
                     } else {content.litopt.visibility = GONE; content.litopt.setOnClickListener(null); btn=null}
 
-                    if(textPadding>0) { content.lit.editText!!.setPadding(textPadding) }
-                    else { content.lit.editText!!.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
+//                    if(textPadding>0) { content.litET.setPadding(textPadding) }
+//                    else { content.litET.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
                     if (content.lit.editText!=null){
                         if(text != null) {
@@ -234,13 +231,12 @@ import com.google.android.material.textfield.TextInputLayout
                     } else if (textColor >= 0) {
                         content.lit.editText!!.setTextColor(textColor)
                     }
-                    if (textSize >= 0) {
-                        content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+                    if(spTextSize>=0) {content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
+                    else if (textSize >= 0) {
+                        content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
                     }
 
-                    content.lit.editText!!.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
-                        textHasFocus(hasFocus)
-                    }
+                    content.lit.editText!!.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> textHasFocus(hasFocus) }
                 }
             }
         }
@@ -264,9 +260,9 @@ import com.google.android.material.textfield.TextInputLayout
                     try{hint = typedArray!!.getString(R.styleable.CornerLayout_hint)!!} catch(ex:Exception) {ex.printStackTrace();hint=""}
                     hintColor = typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)
                     hintColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_hintColor)
-                    textColor =
-                        typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
+                    textColor = typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
                     textColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_textColor)
+                    spTextSize = typedArray!!.getInteger(R.styleable.CornerLayout_spTextSize, -1)
                     textSize = typedArray!!.getDimension(R.styleable.CornerLayout_textSize, -1f)
                     passwordToggle =
                         typedArray!!.getBoolean(
@@ -282,6 +278,13 @@ import com.google.android.material.textfield.TextInputLayout
                     )
                     tintOptions =
                         typedArray!!.getColorStateList(R.styleable.CornerLayout_tintOption)
+                textPadding=typedArray!!.getDimension(R.styleable.CornerLayout_textPadding, 0f).toInt()
+                textPaddingTop=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingTop, 0f).toInt()
+                textPaddingLeft=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingLeft, 0f).toInt()
+                textPaddingRight=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingRight, 0f).toInt()
+                textPaddingStart=typedArray!!.getDimensionPixelSize(R.styleable.CornerLayout_textPaddingStart, 0).toInt()
+                textPaddingEnd=typedArray!!.getDimensionPixelOffset(R.styleable.CornerLayout_textPaddingEnd, 0).toInt()
+                textPaddingBottom=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingBottom, 0f).toInt()
                 return create()
             } catch (ex: Exception) { ex.printStackTrace(); return createDefault()
             } /*finally { typedArray.recycle() }*/

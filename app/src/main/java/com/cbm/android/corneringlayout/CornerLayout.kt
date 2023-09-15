@@ -113,7 +113,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
 //            if(content is TextInput) {
 //                (content as TextInput).et!!.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
 //            }
-//            setPadding(0)
+//            setPadding(0f)
 //        }
         setTextConditional(conditional)
 
@@ -280,10 +280,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
                     } else {
                         ((content as TextInput).getView())
                     },
-                    LayoutParams(
-                        LayoutParams.MATCH_PARENT,
-                        LayoutParams.WRAP_CONTENT
-                    )
+                    LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
                 )
             }
             2 -> {}
