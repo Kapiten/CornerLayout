@@ -4,30 +4,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
-    <EditText
-        android:id="@+id/lstet"
-        android:layout_width="0dp"
+    android:orientation="vertical"
+    android:gravity="center_vertical|end">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#0000"
-        tools:text="Sample text."/>
-    <ImageView
-        android:id="@+id/lstiv"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_visibility_24"
-        android:visibility="gone"
-        />
-    <TextView
-        android:id="@+id/lstopt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="@android:color/transparent"
-        android:text="@string/symbol_x"
-        android:textColor="#F888"
-        android:visibility="gone"
-        />
+        android:orientation="horizontal"
+        android:gravity="center_vertical|end">
+        <EditText
+            android:id="@+id/lstet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_alignParentStart="true"
+            android:background="#0000"
+            tools:text="Sample text."/>
+        <TextView
+            android:id="@+id/lstopt"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_toLeftOf="@id/lstet"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:text="@string/symbol_x"
+            android:textColor="#F888"
+            android:visibility="gone"
+            />
+        <ImageView
+            android:id="@+id/lstiv"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="@dimen/s4dp"
+            android:src="@drawable/ic_visibility_24"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+    <View
+        android:id="@+id/lstul"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#80000000"
+        android:visibility="gone"/>
+
 </LinearLayout>

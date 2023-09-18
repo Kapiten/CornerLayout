@@ -62,12 +62,12 @@ import com.google.android.material.shape.ShapeAppearanceModel
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {initView();setCustoms(attrs)}
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr){initView();setCustoms(attrs)}
 
-    fun initView() { View.inflate(context, R.layout.layout_corner, this); orientation=VERTICAL }
+    fun initView() { View.inflate(context, R.layout.layout_corner, this); /*orientation=VERTICAL*/ }
 
     fun setCustoms(attrs: AttributeSet?) {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.CornerLayout)
         val ctype = ta!!.getInt(R.styleable.CornerLayout_contentType, 0)
-        if(ta.getInt(R.styleable.CornerLayout_contentType, 0)>0) { createContentType(if (ctype<=0){null}else {if(ctype==1){ContentText.Simple}else{ContentText.Advanced}}, attrs) }
+        if(ta.getInt(R.styleable.CornerLayout_contentType, 0)>0) {createContentType(if (ctype<=0){null}else {if(ctype==1){ContentText.Simple}else{ContentText.Advanced}}, attrs)}
         if(content is TextInput) {
             (content as TextInput).et!!.gravity = gravity
 //            (content as TextInput).et!!.isEnabled = ta.getBoolean(R.styleable.CornerLayout_textEnabled, true)
@@ -92,6 +92,11 @@ import com.google.android.material.shape.ShapeAppearanceModel
         }
         if(ta.getDimension(R.styleable.CornerLayout_bottomRightRadius, -1f)>0) {
             setBottomRightRadius(ta.getDimension(R.styleable.CornerLayout_bottomRightRadius, -1f))
+        }
+
+        orientation=ta.getInt(R.styleable.CornerLayout_orientation, 1);
+        if(orientation<0||orientation>1) {
+            orientation=VERTICAL
         }
 
         createPopupWindow()
@@ -208,7 +213,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
     fun setTextEnabled(enabled:Boolean) {
         if(!enabled) { if(fillColors==null) { shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFB0B0B0")) }
         } else{ if(fillColor<1){shapeDrawable!!.fillColor=makeCurrentStateColor(fillColor)} else {shapeDrawable!!.fillColor=makeCurrentStateColor(Color.WHITE)} }
-        if(content is TextInput){(content as TextInput).et!!.isEnabled=enabled}
+        if(content is TextInput){if((content as TextInput).et!=null){(content as TextInput).et!!.isEnabled=enabled}; if((content as TextInput).btn!=null){(content as TextInput).btn!!.isEnabled=enabled}}
     }
 
     fun isTextConditional(): Boolean { return conditionView!=null }

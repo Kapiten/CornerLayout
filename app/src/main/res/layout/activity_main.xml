@@ -55,6 +55,9 @@
             app:spTextSize="20"
             app:hint="Sample Hint"
             app:hintColor="#FFFF8000"
+            app:showUnderline="true"
+            app:underlineColor="#08F"
+            app:underlineFocusColor="#FF0"
             />
 
         <com.cbm.android.corneringlayout.CornerLayout
@@ -104,6 +107,7 @@
             app:inputType="textEmailAddress"
             app:optionsDrawable="@drawable/baseline_person_outline_24"
             app:showOption="true"
+            app:spTextSize="20"
             app:text="Hello, CornerLayout World."
             app:textColor="@color/white"
             app:textPaddingTop="@dimen/s16dp"
@@ -132,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/s4dp"
             app:cornerType="cut"
-            app:radius="@dimen/s16dp"
+            app:radius="@dimen/s8dp"
             android:gravity="center"
             app:fillColor="@color/black"
             app:contentType="text"
@@ -202,6 +206,7 @@
             app:textPadding="@dimen/s8dp"
             app:showOption="true"
             app:tintOption="@color/white"
+            app:optionsDrawable="@drawable/ic_clear_24"
             />
 
         <com.cbm.android.corneringlayout.CornerLayout
@@ -301,12 +306,12 @@
             android:orientation="horizontal">
             <com.cbm.android.corneringlayout.CornerButton
                 android:id="@+id/btnSampleA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/s8dp"
-                app:cbText="SampleA"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="4dp"
+                app:cbText=""
                 app:cbCornerType="cut"
-                app:cbRadius="@dimen/s8dp"
+                app:cbRadius="14dp"
                 app:cbStrokeColor="@drawable/colors_black_gray"
                 app:cbStrokingWidth="@dimen/s4dp"
                 />

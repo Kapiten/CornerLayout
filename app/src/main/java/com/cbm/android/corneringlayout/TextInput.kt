@@ -9,13 +9,13 @@ import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.setPadding
@@ -23,6 +23,7 @@ import androidx.viewbinding.ViewBinding
 import com.cbm.android.corneringlayout.databinding.LayoutAdvancedTextBinding
 import com.cbm.android.corneringlayout.databinding.LayoutSimpleTextBinding
 import com.google.android.material.textfield.TextInputLayout
+
 
 //#set { tebogo.sibiya = "thabiso_ramolobeng" }
 
@@ -40,6 +41,7 @@ import com.google.android.material.textfield.TextInputLayout
     var ctext: Int = 0; var passwordToggle = false; var showOption = false
     var text = ""; var textSize = -1f; var spTextSize=-1
     var hint = "" ; var hintColor = Color.BLACK; var hintColors: ColorStateList? = null
+    var showUnderline = false; var underlinerColor:Int=0; var underlineFocusColor:Int=0
     var textColor = Color.BLACK; var textColors: ColorStateList? = null
     var tintOption = Color.parseColor("#FF808080"); var tintOptions: ColorStateList? = null
     var optionsDrawable: Drawable? = null
@@ -68,13 +70,8 @@ import com.google.android.material.textfield.TextInputLayout
 
     private fun create(): TextInput {
         when (ctext) {
-            1 -> {
-                contentText = CornerLayout.ContentText.Simple
-            }
-            2 -> {
-                contentText =
-                    CornerLayout.ContentText.Advanced
-            }
+            1 -> { contentText = CornerLayout.ContentText.Simple }
+            2 -> { contentText = CornerLayout.ContentText.Advanced }
         }
         if(text==null){text=""}
         if (contentText != null) {
@@ -117,10 +114,11 @@ import com.google.android.material.textfield.TextInputLayout
                                 et!!.inputType=InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_CLASS_TEXT
                             }
                         }
-                    } else {
-                        et!!.transformationMethod=null
-                    }
+                    } else { et!!.transformationMethod=null }
 
+                    if(underlineFocusColor>0){underlineFocusColor=getAccentColor()}
+                    content.lstul.visibility=if(showUnderline){VISIBLE}else{GONE}
+                    content.lstul.setBackgroundColor(underlinerColor)
                     if(showOption) {
                         content.lstopt.visibility = VISIBLE
                         btn = content.lstopt
@@ -146,7 +144,7 @@ import com.google.android.material.textfield.TextInputLayout
                                 )
                             }
                             content.lstopt.setTextSize(
-                                TypedValue.COMPLEX_UNIT_PX,
+                                TypedValue.COMPLEX_UNIT_SP,
                                 et!!.textSize*1f
                             )
                         }
@@ -155,7 +153,7 @@ import com.google.android.material.textfield.TextInputLayout
 
                     if(content.lstet!=null) {
                         if (text != null) {
-                            content.lstet.text.clear();content.lstet.text.append(text)
+                            content.lstet.text.clear(); content.lstet.text.append(text)
                         } else {
                             content.lstet.text.clear()
                         }
@@ -179,7 +177,7 @@ import com.google.android.material.textfield.TextInputLayout
                     if(textPadding>0) { content.lstet.setPadding(textPadding) }
                     else { content.lstet.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
-                    content.lstet.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> textHasFocus(hasFocus) }
+                    content.lstet.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> textHasFocus(hasFocus); content.lstul.background=(ColorDrawable(if(hasFocus){underlineFocusColor;}else{underlinerColor})); }
                 } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
                     (content as LayoutAdvancedTextBinding)
                     et = content.lit.editText
@@ -207,7 +205,7 @@ import com.google.android.material.textfield.TextInputLayout
                         } else {
                             if(tintOptions!=null) {content.litopt.setTextColor(tintOptions)}
                             else {content.litopt.setTextColor(getCornerLayout().makeCurrentStateColor(tintOption))}
-                            content.litopt.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())
+                            content.litopt.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat()*1.2f)
                         }
 
                         content.litopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
@@ -256,14 +254,18 @@ import com.google.android.material.textfield.TextInputLayout
                     ctext = typedArray!!.getInt(R.styleable.CornerLayout_contentText, 0)
                     try{text = typedArray!!.getString(R.styleable.CornerLayout_text)!!}catch (ex:Exception){ex.printStackTrace();text=""}
                     try{hint = typedArray!!.getString(R.styleable.CornerLayout_hint)!!} catch(ex:Exception) {ex.printStackTrace();hint=""}
-                    hintColor = if(typedArray!!.getString(R.styleable.CornerLayout_hintColor)!!.startsWith("#"))
+                    try {hintColor = if(typedArray!!.getString(R.styleable.CornerLayout_hintColor)!!.startsWith("#"))
                     {Color.parseColor(typedArray!!.getString(R.styleable.CornerLayout_hintColor))}
-                    else {typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)}
+                    else {typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)}}
+                    catch(ex:Exception){ex.printStackTrace()}
                     hintColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_hintColor)
                     textColor = typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
                     textColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_textColor)
                     spTextSize = typedArray!!.getInteger(R.styleable.CornerLayout_spTextSize, -1)
                     textSize = typedArray!!.getDimension(R.styleable.CornerLayout_textSize, -1f)
+                showUnderline = typedArray!!.getBoolean(R.styleable.CornerLayout_showUnderline, false);
+                underlinerColor=typedArray!!.getColor(R.styleable.CornerLayout_underlineColor, Color.GRAY)
+                underlineFocusColor=typedArray!!.getColor(R.styleable.CornerLayout_underlineFocusColor, Color.BLACK)
                     passwordToggle =
                         typedArray!!.getBoolean(
                             R.styleable.CornerLayout_passwordToggleEnabled,
@@ -277,17 +279,26 @@ import com.google.android.material.textfield.TextInputLayout
                         Color.parseColor("#FF808080")
                     )
                     tintOptions = typedArray!!.getColorStateList(R.styleable.CornerLayout_tintOption)
-                textPadding=typedArray!!.getDimension(R.styleable.CornerLayout_textPadding, 0f).toInt()
-                textPaddingTop=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingTop, 0f).toInt()
-                textPaddingLeft=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingLeft, 0f).toInt()
-                textPaddingRight=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingRight, 0f).toInt()
-                textPaddingStart=typedArray!!.getDimensionPixelSize(R.styleable.CornerLayout_textPaddingStart, 0).toInt()
-                textPaddingEnd=typedArray!!.getDimensionPixelOffset(R.styleable.CornerLayout_textPaddingEnd, 0).toInt()
-                textPaddingBottom=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingBottom, 0f).toInt()
+                    textPadding=typedArray!!.getDimension(R.styleable.CornerLayout_textPadding, 0f).toInt()
+                    textPaddingTop=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingTop, 0f).toInt()
+                    textPaddingLeft=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingLeft, 0f).toInt()
+                    textPaddingRight=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingRight, 0f).toInt()
+                    textPaddingStart=typedArray!!.getDimensionPixelSize(R.styleable.CornerLayout_textPaddingStart, 0).toInt()
+                    textPaddingEnd=typedArray!!.getDimensionPixelOffset(R.styleable.CornerLayout_textPaddingEnd, 0).toInt()
+                    textPaddingBottom=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingBottom, 0f).toInt()
                 return create()
             } catch (ex: Exception) { ex.printStackTrace(); return createDefault()
             } /*finally { typedArray.recycle() }*/
         } else {return createDefault()}
+    }
+
+    public fun getAccentColor(): Int {
+        val typedValue = TypedValue()
+        val a: TypedArray =
+            context.obtainStyledAttributes(typedValue.data, intArrayOf(android.R.attr.colorAccent))
+        val color = a.getColor(0, 0)
+        a.recycle()
+        return color
     }
 
     private fun textHasFocus(hasFocus: Boolean) {
@@ -397,6 +408,30 @@ import com.google.android.material.textfield.TextInputLayout
     fun setOnOptionsClick(listener: OnClickListener) {
         if(btn!=null)btn!!.setOnClickListener(listener)
     }
+
+//    public fun setUnderlinerColor(clr:Int) {
+//        underlinerColor = clr
+//        if(underlinerColor<1) {
+//            if (contentText == CornerLayout.ContentText.Simple) {
+//                val content = getViewBinding() ?: getView()
+//                (content as LayoutSimpleTextBinding).lstul.setBackgroundColor(clr)
+//            }
+//        }
+//    }
+//
+//    public fun getUnderlinerColor(): Int {return underlinerColor}
+//
+//    public fun setUnderlinerFocusColor(clr:Int) {
+//        underlineFocusColor = clr
+//        if(underlineFocusColor<1) {
+//            if (contentText == CornerLayout.ContentText.Simple) {
+//                val content = getViewBinding()?:getView()
+//                (content as LayoutSimpleTextBinding).lstul.setBackgroundColor(clr)
+//            }
+//        }
+//    }
+//
+//    public fun getUnderlineFocusColor(): Int {return underlineFocusColor}
 
     companion object {
         val TAG = TextInput.javaClass.simpleName

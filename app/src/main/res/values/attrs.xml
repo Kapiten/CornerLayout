@@ -15,6 +15,10 @@
             <enum name="left" value="1" />
             <enum name="right" value="2" />
         </attr>
+        <attr name="orientation">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
         <attr name="gravity" format="flags">
             <flag name="top" value="0x30" />
             <flag name="bottom" value="0x50" />
@@ -41,8 +45,11 @@
         <attr name="enabled" format="boolean" />
         <attr name="textEnabled" format="boolean" />
         <attr name="noText" format="boolean" />
+        <attr name="showUnderline" format="boolean" />
         <attr name="showOption" format="boolean" />
         <attr name="tintOption" format="reference|color" />
+        <attr name="underlineColor" format="color" />
+        <attr name="underlineFocusColor" format="color" />
         <attr name="hint" format="string" />
         <attr name="text" format="string" />
         <attr name="textColor" format="reference|color" />
