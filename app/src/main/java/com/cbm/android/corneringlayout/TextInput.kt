@@ -214,8 +214,8 @@ import com.google.android.material.textfield.TextInputLayout
                         content.litopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
                     } else {content.litopt.visibility = GONE; content.litopt.setOnClickListener(null); btn=null}
 
-//                    if(textPadding>0) { content.litET.setPadding(textPadding) }
-//                    else { content.litET.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
+                    if(textPadding>0) { content.litET.setPadding(textPadding) }
+                    else { content.litET.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
                     if (content.lit.editText!=null){
                         if(text != null) {
