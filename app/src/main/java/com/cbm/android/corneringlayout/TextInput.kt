@@ -186,8 +186,7 @@ import com.google.android.material.textfield.TextInputLayout
                     if(passwordToggle) {
                         content.lit.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
                         et!!.setSingleLine(true)
-                        et!!.transformationMethod=
-                            PasswordTransformationMethod.getInstance()
+                        et!!.transformationMethod=PasswordTransformationMethod.getInstance()
                         et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
 //                            et!!.setImportantForAutofill(IMPORTANT_FOR_AUTOFILL_NO)
                     }
@@ -247,7 +246,6 @@ import com.google.android.material.textfield.TextInputLayout
         ctext = CornerLayout.ContentText.Simple.ordinal+1
         hint = "Sample"
         textSize = resources.getDimension(R.dimen.s4dp)
-
         return create()
     }
 
@@ -276,8 +274,7 @@ import com.google.android.material.textfield.TextInputLayout
                         R.styleable.CornerLayout_tintOption,
                         Color.parseColor("#FF808080")
                     )
-                    tintOptions =
-                        typedArray!!.getColorStateList(R.styleable.CornerLayout_tintOption)
+                    tintOptions = typedArray!!.getColorStateList(R.styleable.CornerLayout_tintOption)
                 textPadding=typedArray!!.getDimension(R.styleable.CornerLayout_textPadding, 0f).toInt()
                 textPaddingTop=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingTop, 0f).toInt()
                 textPaddingLeft=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingLeft, 0f).toInt()

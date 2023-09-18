@@ -96,12 +96,13 @@
             android:layout_margin="@dimen/s4dp"
             app:contentType="text"
             app:contentText="advanced"
+            android:padding="@dimen/s4dp"
             app:backgroundDrawable="@drawable/bgr8_black"
             app:textColor="@color/white"
             app:text="Hello, CornerLayout World."
             app:textPaddingTop="@dimen/s16dp"
             app:hint="Sample Hint"
-            app:hintColor="#FFFF8000"
+            app:hintColor="@color/white"
             app:inputType="textEmailAddress"
             app:showOption="true"
             app:tintOption="@color/white"
@@ -294,18 +295,22 @@
             app:textSize="20sp"
             />
 
-        <com.cbm.android.corneringlayout.CornerButton
-            android:id="@+id/btnSampleA"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/s8dp"
-            app:cbText="SampleA"
-            app:cbCornerType="cut"
-            app:cbRadius="@dimen/s8dp"
-            app:cbStrokeColor="@drawable/colors_black_gray"
-            app:cbStrokingWidth="@dimen/s4dp"
-            />
-
+            android:orientation="horizontal">
+            <com.cbm.android.corneringlayout.CornerButton
+                android:id="@+id/btnSampleA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/s8dp"
+                app:cbText="SampleA"
+                app:cbCornerType="cut"
+                app:cbRadius="@dimen/s8dp"
+                app:cbStrokeColor="@drawable/colors_black_gray"
+                app:cbStrokingWidth="@dimen/s4dp"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <com.cbm.android.corneringlayout.CornerButton
             android:id="@+id/btnSampleB"
             android:layout_width="match_parent"

@@ -39,6 +39,7 @@
         <attr name="textPaddingEnd" format="dimension" />
         <attr name="textPaddingStart" format="dimension" />
         <attr name="enabled" format="boolean" />
+        <attr name="textEnabled" format="boolean" />
         <attr name="noText" format="boolean" />
         <attr name="showOption" format="boolean" />
         <attr name="tintOption" format="reference|color" />

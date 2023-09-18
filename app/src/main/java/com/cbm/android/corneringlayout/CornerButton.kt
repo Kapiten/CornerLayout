@@ -12,11 +12,14 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.setPadding
+import androidx.core.widget.TextViewCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -48,6 +51,7 @@ import java.math.BigDecimal
     private var colorStates: Array<IntArray>? = null
     private var colorColors: IntArray? = null
 
+    private lateinit var v: View;
     private lateinit var tv: TextView;
 
     constructor(context: Context) : super(context){initView()}

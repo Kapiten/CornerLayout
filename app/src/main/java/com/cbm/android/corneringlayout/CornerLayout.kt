@@ -62,17 +62,15 @@ import com.google.android.material.shape.ShapeAppearanceModel
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {initView();setCustoms(attrs)}
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr){initView();setCustoms(attrs)}
 
-    fun initView() { View.inflate(context, R.layout.layout_corner, this);orientation=VERTICAL }
+    fun initView() { View.inflate(context, R.layout.layout_corner, this); orientation=VERTICAL }
 
     fun setCustoms(attrs: AttributeSet?) {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.CornerLayout)
         val ctype = ta!!.getInt(R.styleable.CornerLayout_contentType, 0)
-        if(ta.getInt(R.styleable.CornerLayout_contentType, 0)>0) {
-            createContentType(if (ctype<=0){null}else {if(ctype==1){ContentText.Simple}else{ContentText.Advanced}}, attrs)
-        }
+        if(ta.getInt(R.styleable.CornerLayout_contentType, 0)>0) { createContentType(if (ctype<=0){null}else {if(ctype==1){ContentText.Simple}else{ContentText.Advanced}}, attrs) }
         if(content is TextInput) {
             (content as TextInput).et!!.gravity = gravity
-            (content as TextInput).et!!.isEnabled = ta.getBoolean(R.styleable.CornerLayout_enabled, true)
+//            (content as TextInput).et!!.isEnabled = ta.getBoolean(R.styleable.CornerLayout_textEnabled, true)
             val texting = !ta.getBoolean(R.styleable.CornerLayout_noText, false);
             (content as TextInput).et!!.isFocusable = texting
             if(!ta.getBoolean(R.styleable.CornerLayout_passwordToggleEnabled, false))
@@ -132,10 +130,9 @@ import com.google.android.material.shape.ShapeAppearanceModel
         }
 
         shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel!!)
-        if(ta.getDrawable(R.styleable.CornerLayout_backgroundDrawable)!=null) {
-            this.background = ta.getDrawable(R.styleable.CornerLayout_backgroundDrawable)
-
-        } else {
+        if(content is TextInput) { setTextEnabled(ta.getBoolean(R.styleable.CornerLayout_textEnabled, true)) }
+        if(ta.getDrawable(R.styleable.CornerLayout_backgroundDrawable)!=null) { this.background = ta.getDrawable(R.styleable.CornerLayout_backgroundDrawable) }
+        else {
             if(ta.getColorStateList(R.styleable.CornerLayout_fillColor)!=null) {
                 shapeDrawable!!.fillColor = ta.getColorStateList(R.styleable.CornerLayout_fillColor)
                 fillColors = shapeDrawable!!.fillColor
@@ -174,12 +171,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
         }
 
         isEnabled = ta.getBoolean(R.styleable.CornerLayout_enabled, true)
-        if(!isEnabled) {
-            if(ta.getColorStateList(R.styleable.CornerLayout_fillColor)==null) {
-                shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFB0B0B0"))
-
-            }
-        }
+        if(!isEnabled) { if(ta.getColorStateList(R.styleable.CornerLayout_fillColor)==null) { shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFB0B0B0")) } }
         ta.recycle()
 
         viewTreeObserver.addOnGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener {
@@ -190,16 +182,8 @@ import com.google.android.material.shape.ShapeAppearanceModel
             var keypadHeight = screenHeight - r.bottom;
 
             if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
-                // keyboard is opened
-                if (!isKeyboardShowing) {
-                    isKeyboardShowing = true
-                }
-            } else {
-                // keyboard is closed
-                if (isKeyboardShowing) {
-                    isKeyboardShowing = false
-                }
-            }
+                /*keyboard is opened*/if (!isKeyboardShowing) { isKeyboardShowing = true }
+            } else {/*keyboard is closed*/if (isKeyboardShowing) { isKeyboardShowing = false } }
 
             try {
                 if(popup!=null&&popup!!.isShowing) {
@@ -221,17 +205,15 @@ import com.google.android.material.shape.ShapeAppearanceModel
 
     fun isTextEnabled(): Boolean { return if(content is TextInput){(content as TextInput).et!!.isEnabled} else {false} }
 
-    fun setTextEnabled(enabled:Boolean){
+    fun setTextEnabled(enabled:Boolean) {
         if(!enabled) { if(fillColors==null) { shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFB0B0B0")) }
         } else{ if(fillColor<1){shapeDrawable!!.fillColor=makeCurrentStateColor(fillColor)} else {shapeDrawable!!.fillColor=makeCurrentStateColor(Color.WHITE)} }
-        if(content is TextInput)(content as TextInput).et!!.isEnabled=enabled
+        if(content is TextInput){(content as TextInput).et!!.isEnabled=enabled}
     }
 
-    fun isTextConditional(): Boolean {return conditionView!=null}
+    fun isTextConditional(): Boolean { return conditionView!=null }
 
-    fun setTextFocusable(set:Boolean) {
-        if(content!=null&&content is TextInput) {(content as TextInput).et!!.isFocusable = set}
-    }
+    fun setTextFocusable(set:Boolean) { if(content!=null&&content is TextInput) {(content as TextInput).et!!.isFocusable = set} }
 
     fun isTextFocusable(): Boolean {if(content!=null&&content is TextInput) {return (content as TextInput).et!!.isFocusable}else{return false}}
 
@@ -253,9 +235,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
             ViewGroup.LayoutParams.WRAP_CONTENT,
             false
         )
-        if (popupWindow != null) {
-            popupWindow!!.setOnClickListener { if (popup != null && popup!!.isShowing) popup!!.dismiss() }
-        }
+        if (popupWindow != null) { popupWindow!!.setOnClickListener { if (popup != null && popup!!.isShowing) popup!!.dismiss() } }
     }
 
     private fun createContentType(ctype: ContentText?, attrs: AttributeSet?) {
@@ -298,11 +278,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
         return this
     }
 
-    override fun draw(canvas: Canvas?) {
-        super.draw(canvas)
-
-        bgShape()
-    }
+    override fun draw(canvas: Canvas?) { super.draw(canvas); bgShape() }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         return !isEnabled
@@ -366,11 +342,8 @@ import com.google.android.material.shape.ShapeAppearanceModel
 
     fun setLayoutEnabled(value:Boolean) {
         isEnabled = value
-        if(!isEnabled) {
-            shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFB0B0B0"))
-        } else {
-            shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFFFFFFF"))
-        }
+        if(!isEnabled) { shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFB0B0B0")) }
+        else { shapeDrawable!!.fillColor = makeCurrentStateColor(Color.parseColor("#FFFFFFFF")) }
     }
 
     fun isLayoutEnabled():Boolean {return isEnabled}
