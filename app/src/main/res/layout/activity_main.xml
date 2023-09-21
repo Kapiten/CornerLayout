@@ -89,25 +89,26 @@
             app:hint="Sample Hint"
             app:hintColor="#FF808080"
             />
+
         <com.cbm.android.corneringlayout.CornerLayout
             android:id="@+id/clBGAdvancesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/s4dp"
-            app:contentType="text"
-            app:contentText="advanced"
             android:padding="@dimen/s4dp"
             app:backgroundDrawable="@drawable/bgr8_black"
-            app:textColor="@color/white"
-            app:text="Hello, CornerLayout World."
-            app:textPaddingTop="@dimen/s16dp"
+            app:contentText="advanced"
+            app:contentType="text"
             app:hint="Sample Hint"
             app:hintColor="@color/white"
             app:inputType="textEmailAddress"
-            app:showOption="true"
-            app:tintOption="@color/white"
             app:optionsDrawable="@drawable/baseline_person_outline_24"
-            />
+            app:showOption="true"
+            app:text="Hello, CornerLayout World."
+            app:textColor="@color/white"
+            app:textPaddingTop="@dimen/s16dp"
+            app:tintOption="@color/white" />
+
         <com.cbm.android.corneringlayout.CornerLayout
             android:id="@+id/clBGCSimpleText"
             android:layout_width="match_parent"
@@ -132,7 +133,6 @@
             android:layout_margin="@dimen/s4dp"
             app:cornerType="cut"
             app:radius="@dimen/s16dp"
-            app:textPaddingTop="@dimen/s8dp"
             android:gravity="center"
             app:fillColor="@color/black"
             app:contentType="text"
