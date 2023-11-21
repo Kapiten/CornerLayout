@@ -3,6 +3,26 @@
     <declare-styleable name="CornerLayout">
         <attr name="leftDrawable" format="reference" />
         <attr name="rightDrawable" format="reference" />
+        <attr name="leftDrawableGravity" format="flags">
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="center_vertical" value="0x10" />
+            <flag name="fill_vertical" value="0x70" />
+            <flag name="center_horizontal" value="0x01" />
+            <flag name="fill_horizontal" value="0x07" />
+            <flag name="clip_vertical" value="0x80" />
+            <flag name="clip_horizontal" value="0x08" />
+        </attr>
+        <attr name="rightDrawableGravity" format="flags">
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="center_vertical" value="0x10" />
+            <flag name="fill_vertical" value="0x70" />
+            <flag name="center_horizontal" value="0x01" />
+            <flag name="fill_horizontal" value="0x07" />
+            <flag name="clip_vertical" value="0x80" />
+            <flag name="clip_horizontal" value="0x08" />
+        </attr>
         <attr name="contentType">
             <enum name="text" value="1" />
             <enum name="image" value="2" />
@@ -41,13 +61,24 @@
         <attr name="enabled" format="boolean" />
         <attr name="textEnabled" format="boolean" />
         <attr name="noText" format="boolean" />
-        <attr name="showOption" format="boolean" />
-        <attr name="tintOption" format="reference|color" />
         <attr name="hint" format="string" />
         <attr name="text" format="string" />
         <attr name="textColor" format="reference|color" />
         <attr name="textSize" format="dimension" />
         <attr name="spTextSize" format="integer" />
+        <attr name="optionsDrawable" format="reference" />
+        <attr name="showOption" format="boolean" />
+        <attr name="tintOption" format="reference|color" />
+        <attr name="optionsDrawableGravity" format="flags">
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="center_vertical" value="0x10" />
+            <flag name="fill_vertical" value="0x70" />
+            <flag name="center_horizontal" value="0x01" />
+            <flag name="fill_horizontal" value="0x07" />
+            <flag name="clip_vertical" value="0x80" />
+            <flag name="clip_horizontal" value="0x08" />
+        </attr>
         <attr name="inputType">
             <flag name="none" value="0x00000000" />
             <flag name="text" value="0x00000001" />
@@ -100,7 +131,6 @@
         <attr name="strokeColor" format="reference|color"/>
         <attr name="strokingWidth" format="dimension"/>
         <attr name="backgroundDrawable" format="reference|color" />
-        <attr name="optionsDrawable" format="reference" />
 
     </declare-styleable>
 </resources>

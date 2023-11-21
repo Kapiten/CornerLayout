@@ -10,6 +10,7 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -36,6 +37,8 @@ import com.google.android.material.shape.ShapeAppearanceModel
     private var contentText: ContentText = ContentText.Simple
     var leftDrawable: Drawable? = null
     var rightDrawable: Drawable? = null
+    var leftDrawableGravity: Int = Gravity.LEFT
+    var rightDrawableGravity: Int = Gravity.LEFT
     private var popupWindow: View? = null
     private var popup: PopupWindow? = null
     private var isKeyboardShowing = false
@@ -79,6 +82,8 @@ import com.google.android.material.shape.ShapeAppearanceModel
         }
         leftDrawable = ta!!.getDrawable(R.styleable.CornerLayout_leftDrawable)
         rightDrawable = ta!!.getDrawable(R.styleable.CornerLayout_rightDrawable)
+        leftDrawableGravity = ta!!.getInt(R.styleable.CornerLayout_leftDrawableGravity, gravity);
+        rightDrawableGravity = ta!!.getInt(R.styleable.CornerLayout_rightDrawableGravity, gravity);
         val conditional = ta!!.getInt(R.styleable.CornerLayout_conditionView, 0)
         setRadius(ta.getDimension(R.styleable.CornerLayout_radius, -1f))
         if(ta.getDimension(R.styleable.CornerLayout_topLeftRadius, -1f)>0) {
@@ -99,11 +104,13 @@ import com.google.android.material.shape.ShapeAppearanceModel
         if(leftDrawable!=null&&ivLeft!=null) {
             ivLeft!!.visibility = View.VISIBLE
             ivLeft!!.setImageDrawable(leftDrawable)
+            ivLeft!!.foregroundGravity = leftDrawableGravity
         }
 
         if(rightDrawable!=null&&ivRight!=null) {
             ivRight!!.visibility = View.VISIBLE
             ivRight!!.setImageDrawable(rightDrawable)
+            ivRight!!.foregroundGravity = rightDrawableGravity
         }
 //        if(paddingTop>0) {
 //            ivRight!!.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)

@@ -10,11 +10,13 @@ import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -42,7 +44,7 @@ import com.google.android.material.textfield.TextInputLayout
     var hint = "" ; var hintColor = Color.BLACK; var hintColors: ColorStateList? = null
     var textColor = Color.BLACK; var textColors: ColorStateList? = null
     var tintOption = Color.parseColor("#FF808080"); var tintOptions: ColorStateList? = null
-    var optionsDrawable: Drawable? = null
+    var optionsDrawable: Drawable? = null; var optionsDrawableGravity = Gravity.CENTER_VERTICAL
 //    var passwordToggle: Boolean = false
     var textPadding:Int=0; var textPaddingTop:Int=0; var textPaddingBottom:Int=0; var textPaddingLeft:Int=0; var textPaddingStart:Int=0; var textPaddingRight:Int=0; var textPaddingEnd:Int=0;
 
@@ -135,6 +137,7 @@ import com.google.android.material.textfield.TextInputLayout
                                             tintOption
                                         ))
                             }
+                            (content.lstopt.layoutParams as LinearLayout.LayoutParams).gravity=optionsDrawableGravity
                         } else {
                             if (tintOptions != null) {
                                 content.lstopt.setTextColor(tintOptions)
@@ -194,6 +197,7 @@ import com.google.android.material.textfield.TextInputLayout
                     if(showOption) {
                         content.litopt.visibility = VISIBLE
                         btn=content.litopt
+                        content.litopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
                         if(optionsDrawable!=null) {
                             content.litopt.setText("")
                             content.litopt.background = optionsDrawable
@@ -209,8 +213,7 @@ import com.google.android.material.textfield.TextInputLayout
                             else {content.litopt.setTextColor(getCornerLayout().makeCurrentStateColor(tintOption))}
                             content.litopt.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())
                         }
-
-                        content.litopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
+                        (content .litopt.layoutParams as LinearLayout.LayoutParams).gravity = optionsDrawableGravity
                     } else {content.litopt.visibility = GONE; content.litopt.setOnClickListener(null); btn=null}
 
                     if(textPadding>0) { content.litET.setPadding(textPadding) }
@@ -221,7 +224,8 @@ import com.google.android.material.textfield.TextInputLayout
                         content.lit.editText!!.text.clear()
                         content.lit.editText!!.text.append(text)
                     } else {content.lit.editText!!.text.clear()}}
-                    if(hint!=null)content.lit.hint = hint
+                    if(hint!=null){content.lit.setHint(hint)}
+                    if(hint!=null){content.lit.hint = hint}
                     if (hintColors != null) {
                         content.lit.setHintTextColor(hintColors)
                     }
@@ -232,7 +236,7 @@ import com.google.android.material.textfield.TextInputLayout
                     }
                     if(spTextSize>=0) {content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
                     else if (textSize >= 0) {
-                        content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
+                        content.lit.editText!!.setTextSize(textSize)
                     }
 
                     content.lit.editText!!.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> textHasFocus(hasFocus) }
@@ -277,6 +281,7 @@ import com.google.android.material.textfield.TextInputLayout
                         Color.parseColor("#FF808080")
                     )
                     tintOptions = typedArray!!.getColorStateList(R.styleable.CornerLayout_tintOption)
+                optionsDrawableGravity = typedArray!!.getInt(R.styleable.CornerLayout_optionsDrawableGravity, optionsDrawableGravity)
                 textPadding=typedArray!!.getDimension(R.styleable.CornerLayout_textPadding, 0f).toInt()
                 textPaddingTop=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingTop, 0f).toInt()
                 textPaddingLeft=typedArray!!.getDimension(R.styleable.CornerLayout_textPaddingLeft, 0f).toInt()
@@ -325,7 +330,6 @@ import com.google.android.material.textfield.TextInputLayout
                         )
                 }
             }
-
         } else {
             if (getCornerLayout().fillColors != null) {
                 getCornerLayout().getShapeDrawable()!!.fillColor =

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,13 +7,14 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/s8dp"
+    android:gravity="center_vertical"
     >
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@null"
+        android:background="@android:color/transparent"
         android:paddingTop="@dimen/s8dp"
         android:textColorHint="#FF808080"
         app:boxStrokeWidth="0dp"
@@ -42,4 +43,4 @@
         android:text="@string/symbol_x"
         android:textColor="#F888"
         />
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>
