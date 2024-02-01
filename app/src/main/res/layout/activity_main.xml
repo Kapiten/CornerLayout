@@ -14,6 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="@dimen/s4dp"
             android:background="#888"
             android:text="Hello CornerLayout World!"/>
@@ -31,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/baseline_warning_24"
                 android:hint="Hinting"
-                android:textColorHint="#FF808080"
+                android:textColorHint="#FFFF"
                 android:text="Hello, CornerLayout World. From"
                 android:textColor="@color/white"
                 />
@@ -40,6 +41,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="@dimen/s4dp"
             android:background="#888"
             android:text="Text: Normal Condition"
@@ -71,6 +73,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="@dimen/s4dp"
             android:background="#888"
             android:text="Text: Backgrounded"
@@ -96,6 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/s4dp"
             android:padding="@dimen/s4dp"
+            android:gravity="center_vertical"
             app:backgroundDrawable="@drawable/bgr8_black"
             app:contentText="advanced"
             app:contentType="text"
@@ -103,10 +107,12 @@
             app:hintColor="@color/white"
             app:inputType="textEmailAddress"
             app:optionsDrawable="@drawable/baseline_person_outline_24"
+            app:optionsDrawableGravity="center_vertical"
             app:showOption="true"
             app:text="Hello, CornerLayout World."
             app:textColor="@color/white"
             app:textPaddingTop="@dimen/s16dp"
+            app:spTextSize="18"
             app:tintOption="@color/white" />
 
         <com.cbm.android.corneringlayout.CornerLayout
@@ -148,6 +154,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="@dimen/s4dp"
             android:background="#888"
             android:text="Text: Conditional=Must be at least 3 characters"
@@ -253,6 +260,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="@dimen/s4dp"
             android:background="#888"
             android:text="Text: Password"
@@ -295,6 +303,14 @@
             app:textSize="20sp"
             />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/s4dp"
+            android:background="#888"
+            android:text="Buttons"
+            />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -332,11 +348,12 @@
             android:padding="@dimen/s8dp"
             app:cbText="SampleC"
             app:cbTextSize="20"
-            app:cbTextColor="@color/black"
+            app:cbTextColor="@color/white"
             app:cbCornerType="cut"
             app:cbRadius="@dimen/s8dp"
             app:cbStrokeColor="@drawable/colors_accent"
             app:cbStrokingWidth="@dimen/s4dp"
+            app:cbFillColor="@drawable/colors_accent"
             />
 
         <com.cbm.android.corneringlayout.CornerButton
