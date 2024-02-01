@@ -37,17 +37,17 @@ import java.math.BigDecimal
     private var shapeAppearanceModel: ShapeAppearanceModel? = null
     private var shapeDrawable: MaterialShapeDrawable? = null
     private var cornerType: Int = 1
-    private var radius = -1f
-    private var topLeftRadius = -1f
-    private var topRightRadius = -1f
-    private var bottomLeftRadius = -1f
-    private var bottomRightRadius = -1f
+    private var radius = 0f
+    private var topLeftRadius = 0f
+    private var topRightRadius = 0f
+    private var bottomLeftRadius = 0f
+    private var bottomRightRadius = 0f
 
     var fillColor: Int = Color.TRANSPARENT
     var fillColors: ColorStateList? = null
     var strokeColor: Int = Color.GRAY
     var strokeColors: ColorStateList? = null
-    private var strokeWidth: Float = -1f
+    private var strokeWidth: Float = 0f
     private var colorStates: Array<IntArray>? = null
     private var colorColors: IntArray? = null
 
@@ -69,19 +69,19 @@ import java.math.BigDecimal
         Log.d(TAG, "CornerButton_cbText: " + ta.getString(R.styleable.CornerButton_cbText)+"\ntvBtn.getText="+text)
         setTextColor(ta.getColor(R.styleable.CornerButton_cbTextColor, Color.BLACK))
 //        setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, ta.getInteger(R.styleable.CornerButton_cbTextSize, -1).toFloat())
-        setRadius(ta.getDimension(R.styleable.CornerButton_cbRadius, -1f))
-        if(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f)>0) {
-            setTopLeftRadius(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, -1f)) }
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, ta.getInteger(R.styleable.CornerButton_cbTextSize, 0).toFloat())
+        setRadius(ta.getDimension(R.styleable.CornerButton_cbRadius, 0f))
+        if(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, 0f)>0) {
+            setTopLeftRadius(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, 0f)) }
 
-        if(ta.getDimension(R.styleable.CornerButton_cbTopRightRadius, -1f)>0) {
-            setTopRightRadius(ta.getDimension(R.styleable.CornerButton_cbTopRightRadius, -1f))
+        if(ta.getDimension(R.styleable.CornerButton_cbTopRightRadius, 0f)>0) {
+            setTopRightRadius(ta.getDimension(R.styleable.CornerButton_cbTopRightRadius, 0f))
         }
-        if(ta.getDimension(R.styleable.CornerButton_cbBottomLeftRadius, -1f)>0) {
-            setBottomLeftRadius(ta.getDimension(R.styleable.CornerButton_cbBottomLeftRadius, -1f))
+        if(ta.getDimension(R.styleable.CornerButton_cbBottomLeftRadius, 0f)>0) {
+            setBottomLeftRadius(ta.getDimension(R.styleable.CornerButton_cbBottomLeftRadius, 0f))
         }
-        if(ta.getDimension(R.styleable.CornerButton_cbBottomRightRadius, -1f)>0) {
-            setBottomRightRadius(ta.getDimension(R.styleable.CornerButton_cbBottomRightRadius, -1f)) }
+        if(ta.getDimension(R.styleable.CornerButton_cbBottomRightRadius, 0f)>0) {
+            setBottomRightRadius(ta.getDimension(R.styleable.CornerButton_cbBottomRightRadius, 0f)) }
 
         cornerType = ta.getInt(R.styleable.CornerButton_cbCornerType, 1)
 //        if(cornerRadius>0){radius = cornerRadius.toFloat()}
@@ -137,7 +137,7 @@ import java.math.BigDecimal
                 shapeDrawable!!.strokeColor = (ColorStateList(colorStates, colorColors))
             }
 
-            shapeDrawable!!.strokeWidth = ta.getDimension(R.styleable.CornerButton_cbStrokingWidth, -1f);
+            shapeDrawable!!.strokeWidth = ta.getDimension(R.styleable.CornerButton_cbStrokingWidth, 0f);
         }
         ta.recycle()
 
@@ -162,7 +162,7 @@ import java.math.BigDecimal
     }
 
     private fun bgShape() {
-        if(radius>-1||(topLeftRadius>-1||topRightRadius>-1||bottomLeftRadius>-1||bottomRightRadius>-1)) { ViewCompat.setBackground(this, shapeDrawable!!) }
+        if(radius>0||(topLeftRadius>0||topRightRadius>0||bottomLeftRadius>0||bottomRightRadius>0)) { ViewCompat.setBackground(this, shapeDrawable!!) }
     }
 
     fun setRadius(value: Float) {
