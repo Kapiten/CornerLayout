@@ -47,7 +47,7 @@ import java.math.BigDecimal
     var fillColors: ColorStateList? = null
     var strokeColor: Int = Color.GRAY
     var strokeColors: ColorStateList? = null
-    private var strokeWidth: Float = 0f
+    private var strokeWidth: Float = -1f
     private var colorStates: Array<IntArray>? = null
     private var colorColors: IntArray? = null
 
@@ -69,7 +69,7 @@ import java.math.BigDecimal
         Log.d(TAG, "CornerButton_cbText: " + ta.getString(R.styleable.CornerButton_cbText)+"\ntvBtn.getText="+text)
         setTextColor(ta.getColor(R.styleable.CornerButton_cbTextColor, Color.BLACK))
 //        setTextColor(ta.getColorStateList(R.styleable.CornerLayout_textColor))
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, ta.getInteger(R.styleable.CornerButton_cbTextSize, 0).toFloat())
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, ta.getInteger(R.styleable.CornerButton_cbTextSize, -1).toFloat())
         setRadius(ta.getDimension(R.styleable.CornerButton_cbRadius, 0f))
         if(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, 0f)>0) {
             setTopLeftRadius(ta.getDimension(R.styleable.CornerButton_cbTopLeftRadius, 0f)) }
@@ -137,7 +137,7 @@ import java.math.BigDecimal
                 shapeDrawable!!.strokeColor = (ColorStateList(colorStates, colorColors))
             }
 
-            shapeDrawable!!.strokeWidth = ta.getDimension(R.styleable.CornerButton_cbStrokingWidth, 0f);
+            shapeDrawable!!.strokeWidth = ta.getDimension(R.styleable.CornerButton_cbStrokingWidth, -1f);
         }
         ta.recycle()
 
@@ -162,7 +162,7 @@ import java.math.BigDecimal
     }
 
     private fun bgShape() {
-        if(radius>0||(topLeftRadius>0||topRightRadius>0||bottomLeftRadius>0||bottomRightRadius>0)) { ViewCompat.setBackground(this, shapeDrawable!!) }
+        if(radius>=0||(topLeftRadius>=0||topRightRadius>=0||bottomLeftRadius>=0||bottomRightRadius>=0)) { ViewCompat.setBackground(this, shapeDrawable!!) }
     }
 
     fun setRadius(value: Float) {
