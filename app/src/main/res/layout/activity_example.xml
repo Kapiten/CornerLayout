@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
@@ -50,11 +49,10 @@
             android:id="@+id/clNormalSimpleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/s8dp"
             app:contentType="text"
             app:contentText="simple"
             app:text="Hello, CornerLayout World."
-            app:spTextSize="20"
+            app:spTextSize="25"
             app:hint="Sample Hint"
             app:hintColor="#FFFF8000"
             />
@@ -83,7 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/s4dp"
-            android:padding="@dimen/s8dp"
             app:contentType="text"
             app:contentText="simple"
             android:background="@drawable/bgr8_black"

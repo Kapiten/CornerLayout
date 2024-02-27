@@ -179,8 +179,8 @@ import com.google.android.material.textfield.TextInputLayout
                         content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
                     }
                     
-                    if(textPadding>0) { content.lstet.setPadding(textPadding) }
-                    else { content.lstet.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
+//                    if(textPadding>0) { content.lstet.setPadding(textPadding) }
+//                    else { content.lstet.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
                     content.lstet.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> textHasFocus(hasFocus) }
                 } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
@@ -216,8 +216,8 @@ import com.google.android.material.textfield.TextInputLayout
                         (content .litopt.layoutParams as LinearLayout.LayoutParams).gravity = optionsDrawableGravity
                     } else {content.litopt.visibility = GONE; content.litopt.setOnClickListener(null); btn=null}
 
-                    if(textPadding>0) { content.litET.setPadding(textPadding) }
-                    else { content.litET.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
+//                    if(textPadding>0) { content.litET.setPadding(textPadding) }
+//                    else { content.litET.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
                     if (content.lit.editText!=null){
                         if(text != null) {
