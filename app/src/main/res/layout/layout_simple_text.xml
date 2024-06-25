@@ -28,5 +28,7 @@
         android:text="@string/symbol_x"
         android:textColor="#F888"
         android:visibility="gone"
+        tools:visibility="visible"
+        tools:textSize="40sp"
         />
 </LinearLayout>

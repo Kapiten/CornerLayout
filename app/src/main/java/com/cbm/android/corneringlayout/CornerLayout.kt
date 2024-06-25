@@ -26,7 +26,8 @@ import com.google.android.material.shape.ShapeAppearanceModel
 
 /*
 * Created by tebogo.sibiya on 14/02/2023.
-*/class CornerLayout : LinearLayout {
+*/
+class CornerLayout : LinearLayout {
     var ivLeft: ImageView?=null
     var ivRight: ImageView?=null
     var conditionView: ImageView? = null
@@ -270,7 +271,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
                     LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
                 )
             }
-            2 -> {}
+            else -> { content = this }
         }
     }
 
@@ -312,7 +313,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
                     LayoutParams.WRAP_CONTENT
                 )
             )
-        }
+        } else { content = this }
     }
 
     fun setContent(type:Int) {

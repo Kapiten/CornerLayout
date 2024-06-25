@@ -57,6 +57,9 @@
             app:spTextSize="20"
             app:hint="Sample Hint"
             app:hintColor="#FFFF8000"
+            app:showOption="true"
+            app:tintOption="@color/black"
+            app:sizeOption="18dp"
             />
 
         <com.cbm.android.corneringlayout.CornerLayout
@@ -69,6 +72,9 @@
             app:hintColor="@drawable/colors_accent"
             app:spTextSize="20"
             app:hint="Sample Advanced Hint"
+            app:showOption="true"
+            app:tintOption="@color/black"
+            app:sizeOption="20dp"
             />
         <TextView
             android:layout_width="match_parent"
@@ -123,14 +129,16 @@
             android:padding="@dimen/s8dp"
             app:contentType="text"
             app:contentText="simple"
-            app:showOption="true"
-            app:tintOption="@color/white"
             app:radius="@dimen/s8dp"
             app:fillColor="@color/black"
             app:textColor="@color/white"
             app:text="Hello, CornerLayout World."
+            app:spTextSize="18"
             app:hint="Sample Hint"
             app:hintColor="#FFFF8000"
+            app:showOption="true"
+            app:tintOption="@color/white"
+            app:sizeOption="26dp"
             />
         <com.cbm.android.corneringlayout.CornerLayout
             android:id="@+id/clBGCAdvancesText"
@@ -182,6 +190,7 @@
             app:textColor="@color/white"
             app:showOption="true"
             app:tintOption="@color/white"
+            app:sizeOption="26dp"
             app:optionsDrawable="@drawable/ic_clear_24"
             />
 

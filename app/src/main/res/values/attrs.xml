@@ -69,6 +69,9 @@
         <attr name="optionsDrawable" format="reference" />
         <attr name="showOption" format="boolean" />
         <attr name="tintOption" format="reference|color" />
+        <attr name="sizeOption" format="dimension" />
+        <attr name="sizeOptionH" format="dimension" />
+        <attr name="sizeOptionW" format="dimension" />
         <attr name="optionsDrawableGravity" format="flags">
             <flag name="top" value="0x30" />
             <flag name="bottom" value="0x50" />
