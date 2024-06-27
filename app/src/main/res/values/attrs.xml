@@ -24,8 +24,8 @@
             <flag name="clip_horizontal" value="0x08" />
         </attr>
         <attr name="contentType">
-            <enum name="text" value="1" />
-            <enum name="image" value="2" />
+            <enum name="container" value="1" />
+            <enum name="text" value="2" />
         </attr>
         <attr name="contentText">
             <enum name="simple" value="1" />

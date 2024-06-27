@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -79,112 +80,134 @@ import com.google.android.material.textfield.TextInputLayout
             }
         }
         if(text==null){text=""}
-        if (contentText != null) {
-            if (contentText!!.equals(CornerLayout.ContentText.Simple)) {
-                setViewBinding(LayoutSimpleTextBinding.inflate(
-                    LayoutInflater.from(context)))
 
-            } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
-                try {
-                    if (this.viewGroup != null) {
-                        setViewBinding(LayoutAdvancedTextBinding.inflate(
-                            LayoutInflater.from(context)))
+        var content = getViewBinding()?:getView()
+        if (content != null) {
+                if (contentText != null) {
+                    if (contentText!! == CornerLayout.ContentText.Simple) {
+                        try {
+                            setViewBinding(
+                                LayoutSimpleTextBinding.inflate(
+                                    LayoutInflater.from(context)))
+                        } catch(ex:Exception) {ex.printStackTrace()}
+                    } else if (contentText!! == CornerLayout.ContentText.Advanced) {
+                        try {
+                            if (this.viewGroup != null) {
+                                setViewBinding(
+                                    LayoutAdvancedTextBinding.inflate(
+                                    LayoutInflater.from(context)))
+                            }
+                        } catch (ex: Exception) {
+                            ex.printStackTrace()
+                        }
                     }
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
-                }
-            }
-
-            val content = getViewBinding()?:getView()
-            if (content != null) {
-                if (contentText!!.equals(CornerLayout.ContentText.Simple)) {
-                    (content as LayoutSimpleTextBinding)
+                if (contentText!! == CornerLayout.ContentText.Simple) {
+                    /*content = */(content as LayoutSimpleTextBinding)
                     et = content.lstet
-                    if(passwordToggle){
-                        content.lstiv.visibility=View.VISIBLE
-                        et!!.setSingleLine(true)
-                        et!!.transformationMethod=
-                            PasswordTransformationMethod.getInstance()
-                        et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
 
-                        content.lstiv.setOnClickListener {
-                            if(content.lstet.transformationMethod==null) {
-                                content.lstiv.setImageResource(R.drawable.ic_visibility_24)
-                                content.lstet.transformationMethod=
-                                    PasswordTransformationMethod.getInstance()
-                                et!!.inputType=(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                    try {
+                        if (content.lstet != null) {
+                            if (text != null) {
+                                content.lstet.text.clear();content.lstet.text.append(text)
                             } else {
-                                content.lstiv.setImageResource(R.drawable.ic_visibility_off_24)
-                                content.lstet.transformationMethod=null
-                                et!!.inputType=InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_CLASS_TEXT
+                                content.lstet.text.clear()
                             }
                         }
-                    } else {
-                        et!!.transformationMethod=null
-                    }
+                    } catch(ex:Exception){ex.printStackTrace()}
+                    try {
+                        if (textColors != null) {
+                            content.lstet.setTextColor(textColors)
+                        } else if (textColor < 0) {
+                            content.lstet.setTextColor(textColor)
+                        }
+                    } catch(ex:Exception){ex.printStackTrace()}
+                    try {
+                        if(spTextSize>=0) {content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
+                        else if (textSize >= 0) {
+                            content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
+                        } } catch(ex:Exception){ex.printStackTrace()}
 
-                    if(showOption) {
-                        content.lstopt.visibility = VISIBLE
-                        btn = content.lstopt
-                        if(optionsDrawable!=null) {
-                            content.lstopt.setText("")
-                            content.lstopt.background = optionsDrawable
-                            if (tintOptions != null) {
-                                content.lstopt.backgroundTintList=(tintOptions)
+                    try{if(hint!=null)content.lstet.hint = hint}catch(ex:Exception){ex.printStackTrace()}
+                    try{
+                        if (hintColors != null) {
+                            content.lstet.setHintTextColor(hintColors)
+                        } else if (hintColor < 0) {
+                            content.lstet.setHintTextColor(hintColor)
+                        }}catch(ex:Exception){ex.printStackTrace()}
+
+                    try {
+                        if (passwordToggle) {
+                            content.lstiv.visibility = View.VISIBLE
+                            et!!.setSingleLine(true)
+                            et!!.transformationMethod =
+                                PasswordTransformationMethod.getInstance()
+                            et!!.inputType =
+                                (InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
+
+                            content.lstiv.setOnClickListener {
+                                if ((content as LayoutSimpleTextBinding).lstet.transformationMethod == null) {
+                                    (content as LayoutSimpleTextBinding).lstiv.setImageResource(R.drawable.ic_visibility_24)
+                                    (content as LayoutSimpleTextBinding).lstet.transformationMethod =
+                                        PasswordTransformationMethod.getInstance()
+                                    et!!.inputType =
+                                        (InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                                } else {
+                                    (content as LayoutSimpleTextBinding).lstiv.setImageResource(R.drawable.ic_visibility_off_24)
+                                    (content as LayoutSimpleTextBinding).lstet.transformationMethod = null
+                                    et!!.inputType =
+                                        InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS + InputType.TYPE_CLASS_TEXT
+                                }
+                            }
+                        } else {
+                            et!!.transformationMethod = null
+                        }
+                    } catch(ex:Exception ){ex.printStackTrace()}
+
+                    try {
+                        if (showOption) {
+                            content.lstopt.visibility = VISIBLE
+                            btn = content.lstopt
+                            if (optionsDrawable != null) {
+                                content.lstopt.setText("")
+                                content.lstopt.background = optionsDrawable
+                                if (tintOptions != null) {
+                                    content.lstopt.backgroundTintList = (tintOptions)
+                                } else {
+                                    content.lstopt.backgroundTintList = (
+                                            getCornerLayout().makeCurrentStateColor(
+                                                tintOption
+                                            ))
+                                }
+                                (content.lstopt.layoutParams as LinearLayout.LayoutParams).gravity =
+                                    optionsDrawableGravity
                             } else {
-                                content.lstopt.backgroundTintList=(
+                                if (tintOptions != null) {
+                                    content.lstopt.setTextColor(tintOptions)
+                                } else {
+                                    content.lstopt.setTextColor(
                                         getCornerLayout().makeCurrentStateColor(
                                             tintOption
-                                        ))
-                            }
-                            (content.lstopt.layoutParams as LinearLayout.LayoutParams).gravity=optionsDrawableGravity
-                        } else {
-                            if (tintOptions != null) {
-                                content.lstopt.setTextColor(tintOptions)
-                            } else {
-                                content.lstopt.setTextColor(
-                                    getCornerLayout().makeCurrentStateColor(
-                                        tintOption
+                                        )
                                     )
+                                }
+                                content.lstopt.setTextSize(
+                                    TypedValue.COMPLEX_UNIT_PX,
+                                    et!!.textSize * 1f
                                 )
                             }
-                            content.lstopt.setTextSize(
-                                TypedValue.COMPLEX_UNIT_PX,
-                                et!!.textSize*1f
-                            )
-                        }
-                        content.lstopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
-                    } else {content.lstopt.visibility = GONE; content.lstopt.setOnClickListener(null); btn=null}
-
-                    if(content.lstet!=null) {
-                        if (text != null) {
-                            content.lstet.text.clear();content.lstet.text.append(text)
+                            content.lstopt.setOnClickListener { et!!.text.clear(); et!!.requestFocus() }
                         } else {
-                            content.lstet.text.clear()
+                            content.lstopt.visibility =
+                                GONE; content.lstopt.setOnClickListener(null); btn = null
                         }
-                    }
-                    if(hint!=null)content.lstet.hint = hint
-                    if (hintColors != null) {
-                        content.lstet.setHintTextColor(hintColors)
-                    } else if (hintColor < 0) {
-                        content.lstet.setHintTextColor(hintColor)
-                    }
-                    if (textColors != null) {
-                        content.lstet.setTextColor(textColors)
-                    } else if (textColor < 0) {
-                        content.lstet.setTextColor(textColor)
-                    }
-                    if(spTextSize>=0) {content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
-                    else if (textSize >= 0) {
-                        content.lstet.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
-                    }
+                    } catch(ex:Exception) {ex.printStackTrace()}
                     
 //                    if(textPadding>0) { content.lstet.setPadding(textPadding) }
 //                    else { content.lstet.setPadding(if(textPaddingLeft>0){textPaddingLeft}else{textPaddingStart}, textPaddingTop, if(textPaddingRight>0){textPaddingRight}else{textPaddingEnd}, textPaddingBottom); }
 
                     content.lstet.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> textHasFocus(hasFocus) }
-                } else if (contentText!!.equals(CornerLayout.ContentText.Advanced)) {
-                    (content as LayoutAdvancedTextBinding)
+                } else if (contentText!! == CornerLayout.ContentText.Advanced) {
+                    content = (content as LayoutAdvancedTextBinding)
                     et = content.lit.editText
                     if(passwordToggle) {
                         content.lit.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
@@ -229,14 +252,14 @@ import com.google.android.material.textfield.TextInputLayout
                     if (hintColors != null) {
                         content.lit.setHintTextColor(hintColors)
                     }
+                    if(spTextSize>=0) {content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
+                    else if (textSize >= 0) {
+                        content.lit.editText!!.setTextSize(textSize)
+                    }
                     if (textColors != null) {
                         content.lit.editText!!.setTextColor(textColors)
                     } else if (textColor >= 0) {
                         content.lit.editText!!.setTextColor(textColor)
-                    }
-                    if(spTextSize>=0) {content.lit.editText!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, spTextSize.toFloat())}
-                    else if (textSize >= 0) {
-                        content.lit.editText!!.setTextSize(textSize)
                     }
 
                     content.lit.editText!!.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> textHasFocus(hasFocus) }
@@ -258,16 +281,16 @@ import com.google.android.material.textfield.TextInputLayout
         if(typedArray!=null) {
             try {
                     ctext = typedArray!!.getInt(R.styleable.CornerLayout_contentText, 0)
-                    try{text = typedArray!!.getString(R.styleable.CornerLayout_text)!!}catch (ex:Exception){ex.printStackTrace();text=""}
-                    try{hint = typedArray!!.getString(R.styleable.CornerLayout_hint)!!} catch(ex:Exception) {ex.printStackTrace();hint=""}
-                    hintColor = if(typedArray!!.getString(R.styleable.CornerLayout_hintColor)!!.startsWith("#"))
+                    try{this.text = typedArray!!.getString(R.styleable.CornerLayout_text)!!; Log.d(TAG, "text="+text)}catch (ex:Exception){text=""; Log.d(TAG, "text=isErr")}
+                    try{hint = typedArray!!.getString(R.styleable.CornerLayout_hint)!!} catch(ex:Exception) {hint=""}
+                    try{hintColor = if(typedArray!!.getString(R.styleable.CornerLayout_hintColor)!!.startsWith("#"))
                     {Color.parseColor(typedArray!!.getString(R.styleable.CornerLayout_hintColor))}
-                    else {typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)}
-                    hintColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_hintColor)
-                    textColor = typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)
-                    textColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_textColor)
-                    spTextSize = typedArray!!.getInteger(R.styleable.CornerLayout_spTextSize, -1)
-                    textSize = typedArray!!.getDimension(R.styleable.CornerLayout_textSize, -1f)
+                    else {typedArray!!.getColor(R.styleable.CornerLayout_hintColor, Color.BLACK)}}catch(ex:Exception){}
+                    try{hintColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_hintColor)}catch(ex:Exception){}
+                    try{textColor = typedArray!!.getColor(R.styleable.CornerLayout_textColor, Color.BLACK)}catch(ex:Exception){}
+                    try{textColors = typedArray!!.getColorStateList(R.styleable.CornerLayout_textColor)}catch(ex:Exception){}
+                    try{spTextSize = typedArray!!.getInteger(R.styleable.CornerLayout_spTextSize, -1)}catch(ex:Exception){}
+                    try{textSize = typedArray!!.getDimension(R.styleable.CornerLayout_textSize, -1f)}catch(ex:Exception){}
                     passwordToggle =
                         typedArray!!.getBoolean(
                             R.styleable.CornerLayout_passwordToggleEnabled,
@@ -351,7 +374,7 @@ import com.google.android.material.textfield.TextInputLayout
 
     private fun getCornerLayout() = (viewGroup!!.parent.parent as CornerLayout)
 
-    fun setTextType(type:CornerLayout.ContentText) { ctext = if(type.equals(CornerLayout.ContentText.Simple)){1}else{2} }
+    fun setTextType(type:CornerLayout.ContentText) { ctext = if(type == CornerLayout.ContentText.Simple){1}else{2} }
 
     fun getTextType(): CornerLayout.ContentText {return if(ctext==1){CornerLayout.ContentText.Simple}else{CornerLayout.ContentText.Advanced}}
 

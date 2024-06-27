@@ -63,7 +63,6 @@
             android:layout_height="wrap_content"
             app:contentType="text"
             app:contentText="advanced"
-            app:text="Hello, CornerLayout World."
             app:hintColor="@drawable/colors_accent"
             app:spTextSize="20"
             app:hint="Sample Advanced Hint"
