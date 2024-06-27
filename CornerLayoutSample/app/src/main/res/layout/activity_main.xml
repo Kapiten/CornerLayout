@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        android:text="Hello World!" />
+
+    <!-- Containers -->
+    <com.cbm.android.corneringlayout.CornerLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        app:strokeColor="@color/black"
+        app:strokingWidth="5dp"
+        app:radius="@dimen/s20dp"
+        />
+
+    <!-- Text Editors -->
+    <com.cbm.android.corneringlayout.CornerLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:contentType="text"
+        app:contentText="simple"
+        app:strokeColor="@color/black"
+        app:strokingWidth="5dp"
+        app:fillColor="@color/gray_400"
+        app:text="ABC"
+        app:textColor="@color/black"
+        app:textSize="50sp"
+        app:hint="CBA"
+        />
+
+    <!-- Buttons -->
+<com.cbm.android.corneringlayout.CornerButton
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_margin="5dp"
+    app:cbText="BTN"
+    app:cbRadius="15dp"
+    app:cbCornerType="round"
+    app:cbStrokeColor="@color/black"
+    app:cbStrokingWidth="5dp"
+    />
+</LinearLayout>
