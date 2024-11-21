@@ -334,6 +334,7 @@
                 app:cbRadius="@dimen/s8dp"
                 app:cbStrokeColor="@drawable/colors_black_gray"
                 app:cbStrokingWidth="@dimen/s4dp"
+                app:cbTextSize="50"
                 />
         </androidx.appcompat.widget.LinearLayoutCompat>
         <com.cbm.android.corneringlayout.CornerButton

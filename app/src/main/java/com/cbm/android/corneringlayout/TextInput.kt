@@ -136,29 +136,29 @@ import com.google.android.material.textfield.TextInputLayout
                                         ))
                             }
 
-                            if(sizeOption>0) {
-                                var optS = sizeOption
-                                optS = if(optS>40){40}else{optS}
-                                content.lstopt.layoutParams = LinearLayout.LayoutParams(optS, optS)
-                            } else {
-                                var optSH = if(sizeOptionH>0){sizeOptionH}else{26}
-                                optSH = if(optSH>40){40}else{optSH}
-                                var optSW = if(sizeOptionW>0){sizeOptionW}else{26}
-                                optSW = if(optSW>40){40}else{optSW}
-                                content.lstopt.layoutParams = LinearLayout.LayoutParams(optSH, optSW)
-                            }
+//                            if(sizeOption>0) {
+//                                var optS = sizeOption
+//                                optS = if(optS>40){40}else{optS}
+//                                content.lstopt.layoutParams = LinearLayout.LayoutParams(optS, optS)
+//                            } else {
+//                                var optSH = if(sizeOptionH>0){sizeOptionH}else{26}
+//                                optSH = if(optSH>40){40}else{optSH}
+//                                var optSW = if(sizeOptionW>0){sizeOptionW}else{26}
+//                                optSW = if(optSW>40){40}else{optSW}
+//                            }
+                            content.lstopt.layoutParams = LinearLayout.LayoutParams(sizeOption, sizeOption)
 
                             (content.lstopt.layoutParams as LinearLayout.LayoutParams).gravity=optionsDrawableGravity
                         } else {
-                            if(sizeOption>0) {
-                                var optS = sizeOption.toFloat()*0.5F
-                                optS = if(optS>40){40F}else{optS}
-                                content.lstopt.setTextSize(TypedValue.COMPLEX_UNIT_SP, optS)
-                            } else {
-                                var sohw = if(sizeOptionH>0){sizeOptionH}else{if(sizeOptionW>0){sizeOptionW}else{0}}.toFloat()
-                                sohw = if(sohw>40){40F}else{sohw}
+//                            if(sizeOption>0) {
+//                                var optS = sizeOption.toFloat()*0.5F
+//                                optS = if(optS>40){40F}else{optS}
+//                                content.lstopt.setTextSize(TypedValue.COMPLEX_UNIT_SP, optS)
+//                            } else {
+//                            }
+                                var sohw = if(sizeOption>0){sizeOption}else{if(sizeOption>0){sizeOption}else{0}}.toFloat()
+//                                sohw = if(sohw>40){40F}else{sohw}
                                 content.lstopt.setTextSize(TypedValue.COMPLEX_UNIT_SP, if(sohw>0){(sohw*0.5F)}else{26F})
-                            }
                             try { (content.lstet.layoutParams as LinearLayout.LayoutParams).rightMargin = -(context.getDrawable(R.drawable.ic_visibility_24)!!.toBitmap().width + content.lstopt.textSize.toInt())
                             }catch(ex:Exception){ex.printStackTrace()}
                             if (tintOptions != null) {
